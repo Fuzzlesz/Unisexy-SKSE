@@ -19,8 +19,7 @@ void Unisexy::DoSexyStuff()
 
 	int createdCount = 0;
 	int processedCount = 0;
-	int fallbackAttempted = 0;
-	int fallbackSucceeded = 0;
+	int failedNoSourceFile = 0;
 	FormIDManager formIDManager;
 	std::map<RE::BGSHeadPart::HeadPartType, int> skippedByType;
 
@@ -44,6 +43,15 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 		processedCount++;
+
+		// Skip if the head part isn't playable
+		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
+			if (settings.IsVerboseLogging()) {
+				logger::info("Skipping non-playable head part: {} [{:08X}]",
+					headPart->GetFormEditorID(), headPart->formID);
+			}
+			continue;
+		}
 
 		// Skip if the head part type isn’t enabled in settings
 		auto headPartType = static_cast<RE::BGSHeadPart::HeadPartType>(headPart->type.get());
@@ -102,19 +110,11 @@ void Unisexy::DoSexyStuff()
 
 		const RE::TESFile* targetFile = GetFileFromFormID(headPart->formID);
 		if (!targetFile) {
-			fallbackAttempted++;
-			logger::warn("No source file found for head part {} [{:08X}]. Using fallback.",
+			failedNoSourceFile++;
+			logger::error("No source file found for head part {} [{:08X}]. Skipping.",
 				editorID, headPart->formID);
-			targetFile = dataHandler.LookupModByName("Unisexy.esp");
-			if (targetFile) {
-				fallbackSucceeded++;
-				logger::info("Using fallback plugin Unisexy.esp for head part {} [{:08X}]",
-					editorID, headPart->formID);
-			} else {
-				logger::error("Fallback plugin Unisexy.esp not found. Skipping {}", newEditorID);
-				delete newHeadPart;
-				continue;
-			}
+			delete newHeadPart;
+			continue;
 		}
 
 		if (!formIDManager.AssignFormID(newHeadPart, targetFile)) {
@@ -140,9 +140,8 @@ void Unisexy::DoSexyStuff()
 	logger::info("Finished processing in {} ms. Processed {} head parts, created {} new parts.",
 		duration, processedCount, createdCount);
 
-	if (fallbackAttempted > 0) {
-		logger::info("Fallback usage: Attempted {} times ({} succeeded, {} failed)",
-			fallbackAttempted, fallbackSucceeded, fallbackAttempted - fallbackSucceeded);
+	if (failedNoSourceFile > 0) {
+		logger::info("Failed to process {} head parts due to missing source files.", failedNoSourceFile);
 	}
 
 	bool loggedAnySkips = false;
