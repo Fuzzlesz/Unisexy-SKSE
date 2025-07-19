@@ -19,8 +19,8 @@
 
 ## Building
 ```
-git clone https://github.com/powerof3/HeadpartWhitelist.git
-cd HeadpartWhitelist
+git clone https://github.com/Fuzzlesz/Unisexy-SKSE.git
+cd Unisexy-SKSE
 # pull commonlib /extern to override the path settings
 git submodule init
 # to update submodules to checked in build
