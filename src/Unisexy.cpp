@@ -20,16 +20,16 @@ void Unisexy::DoSexyStuff()
 	int createdCount = 0;
 	int processedCount = 0;
 	int failedNoSourceFile = 0;
+	int disabledVanillaCount = 0;  // Track disabled vanilla parts
 	FormIDManager formIDManager;
 	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // Pair: male skips, female skips
 
-	// Include kMisc in loggable types
 	static const std::set<RE::BGSHeadPart::HeadPartType> loggableTypes = {
 		RE::BGSHeadPart::HeadPartType::kHair,
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
 		RE::BGSHeadPart::HeadPartType::kScar,
 		RE::BGSHeadPart::HeadPartType::kEyebrows,
-		RE::BGSHeadPart::HeadPartType::kMisc  // Added for kMisc headparts
+		RE::BGSHeadPart::HeadPartType::kMisc
 	};
 
 	std::set<std::string> existingEditorIDs;
@@ -45,21 +45,21 @@ void Unisexy::DoSexyStuff()
 		}
 		processedCount++;
 
-		// Skip if the head part isn't playable
-		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
-			if (settings.IsVerboseLogging()) {
-				logger::info("Skipping non-playable head part: {} [{:08X}]",
-					headPart->GetFormEditorID(), headPart->formID);
-			}
-			continue;
-		}
-
 		auto headPartType = static_cast<RE::BGSHeadPart::HeadPartType>(headPart->type.get());
 
 		// Skip kMisc headparts without kExtraPart flag
 		if (headPartType == RE::BGSHeadPart::HeadPartType::kMisc && !headPart->flags.all(RE::BGSHeadPart::Flag::kIsExtraPart)) {
 			if (settings.IsVerboseLogging()) {
 				logger::info("Skipping kMisc head part without kExtraPart flag: {} [{:08X}]",
+					headPart->GetFormEditorID(), headPart->formID);
+			}
+			continue;
+		}
+
+		// Skip if the head part isn't playable
+		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
+			if (settings.IsVerboseLogging()) {
+				logger::info("Skipping non-playable head part: {} [{:08X}]",
 					headPart->GetFormEditorID(), headPart->formID);
 			}
 			continue;
@@ -155,12 +155,23 @@ void Unisexy::DoSexyStuff()
 				Settings::GetHeadPartTypeName(headPartType),
 				headPart->formID);
 		}
+
+		// Disable vanilla head part after successful creation if setting is enabled
+		if (settings.IsDisableVanillaParts()) {
+			headPart->flags.reset(RE::BGSHeadPart::Flag::kPlayable);
+			disabledVanillaCount++;
+			if (settings.IsVerboseLogging()) {
+				logger::info("Disabled vanilla head part: {} [{:08X}] (Type: {})",
+					headPart->GetFormEditorID(), headPart->formID,
+					Settings::GetHeadPartTypeName(headPartType));
+			}
+		}
 	}
 
 	auto endTime = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-	logger::info("Finished processing in {} ms. Processed {} head parts, created {} new parts.",
-		duration, processedCount, createdCount);
+	logger::info("Finished processing in {} ms. Processed {} head parts, created {} new parts, disabled {} vanilla parts.",
+		duration, processedCount, createdCount, disabledVanillaCount);
 
 	if (failedNoSourceFile > 0) {
 		logger::info("Failed to process {} head parts due to missing source files.", failedNoSourceFile);

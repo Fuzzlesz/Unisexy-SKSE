@@ -14,7 +14,7 @@ std::string Settings::GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type)
 	case RE::BGSHeadPart::HeadPartType::kEyebrows:
 		return "Eyebrows";
 	case RE::BGSHeadPart::HeadPartType::kMisc:
-		return "Misc";  // Added for kMisc headparts
+		return "Misc";
 	default:
 		return "Unknown";
 	}
@@ -36,8 +36,9 @@ void Settings::Load()
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { true, true };
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = { true, true };
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = { true, true };
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc] = { true, true };  // Default for kMisc
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc] = { true, true };
 		_verboseLogging = false;
+		_disableVanillaParts = false;  // Default to false
 		return;
 	}
 
@@ -46,15 +47,16 @@ void Settings::Load()
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].maleEnabled = ini.GetBoolValue(section, "ScarsMale", true);
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled = ini.GetBoolValue(section, "BrowsMale", true);
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].maleEnabled = ini.GetBoolValue(section, "FacialHairMale", true);
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = ini.GetBoolValue(section, "MiscMale", true);  // Added for kMisc
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = ini.GetBoolValue(section, "MiscMale", true);
 
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].femaleEnabled = ini.GetBoolValue(section, "HairFemale", true);
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].femaleEnabled = ini.GetBoolValue(section, "ScarsFemale", true);
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].femaleEnabled = ini.GetBoolValue(section, "BrowsFemale", true);
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled = ini.GetBoolValue(section, "FacialHairFemale", true);
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = ini.GetBoolValue(section, "MiscFemale", true);  // Added for kMisc
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = ini.GetBoolValue(section, "MiscFemale", true);
 
 	_verboseLogging = ini.GetBoolValue("Debug", "VerboseLogging", false);
+	_disableVanillaParts = ini.GetBoolValue("Debug", "DisableVanillaParts", false);  // Load new setting
 
 	logger::info("Settings loaded.");
 }
@@ -74,4 +76,9 @@ bool Settings::IsFemaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const
 bool Settings::IsVerboseLogging() const
 {
 	return _verboseLogging;
+}
+
+bool Settings::IsDisableVanillaParts() const
+{
+	return _disableVanillaParts;
 }
