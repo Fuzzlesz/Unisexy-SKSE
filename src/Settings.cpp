@@ -30,28 +30,40 @@ void Settings::Load()
 
 	if (const auto rc = ini.LoadFile(iniPath.c_str()); rc < 0) {
 		logger::warn("Could not load settings file, using default values.");
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair] = true;
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = true;
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = true;
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = true;
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair] = { true, true };
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { true, true };
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = { true, true };
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = { true, true };
 		_verboseLogging = false;
 		return;
 	}
 
 	const char* section = "HeadPartTypes";
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair] = ini.GetBoolValue(section, "Hair", true);
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = ini.GetBoolValue(section, "Scars", true);
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = ini.GetBoolValue(section, "Brows", true);
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = ini.GetBoolValue(section, "FacialHair", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].maleEnabled = ini.GetBoolValue(section, "HairMale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].maleEnabled = ini.GetBoolValue(section, "ScarsMale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled = ini.GetBoolValue(section, "BrowsMale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].maleEnabled = ini.GetBoolValue(section, "FacialHairMale", true);
+
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].femaleEnabled = ini.GetBoolValue(section, "HairFemale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].femaleEnabled = ini.GetBoolValue(section, "ScarsFemale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].femaleEnabled = ini.GetBoolValue(section, "BrowsFemale", true);
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled = ini.GetBoolValue(section, "FacialHairFemale", true);
+
 	_verboseLogging = ini.GetBoolValue("Debug", "VerboseLogging", false);
 
 	logger::info("Settings loaded.");
 }
 
-bool Settings::IsEnabled(RE::BGSHeadPart::HeadPartType a_type) const
+bool Settings::IsMaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const
 {
 	const auto it = _enabledTypes.find(a_type);
-	return it != _enabledTypes.end() ? it->second : false;
+	return it != _enabledTypes.end() ? it->second.maleEnabled : false;
+}
+
+bool Settings::IsFemaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const
+{
+	const auto it = _enabledTypes.find(a_type);
+	return it != _enabledTypes.end() ? it->second.femaleEnabled : false;
 }
 
 bool Settings::IsVerboseLogging() const

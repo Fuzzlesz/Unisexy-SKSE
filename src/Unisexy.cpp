@@ -21,7 +21,7 @@ void Unisexy::DoSexyStuff()
 	int processedCount = 0;
 	int failedNoSourceFile = 0;
 	FormIDManager formIDManager;
-	std::map<RE::BGSHeadPart::HeadPartType, int> skippedByType;
+	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // Pair: male skips, female skips
 
 	// We want labelled types for logging
 	static const std::set<RE::BGSHeadPart::HeadPartType> loggableTypes = {
@@ -53,11 +53,26 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 
-		// Skip if the head part type isn’t enabled in settings
+		// Skip if the head part type isn’t enabled for the target gender
 		auto headPartType = static_cast<RE::BGSHeadPart::HeadPartType>(headPart->type.get());
-		if (!settings.IsEnabled(headPartType)) {
+		using Flag = RE::BGSHeadPart::Flag;
+		const bool isMale = headPart->flags.all(Flag::kMale);
+		const bool isFemale = headPart->flags.all(Flag::kFemale);
+		bool shouldProcess = false;
+
+		if (isMale && !isFemale && settings.IsFemaleEnabled(headPartType)) {
+			shouldProcess = true;  // Male part, female enabled
+		} else if (!isMale && isFemale && settings.IsMaleEnabled(headPartType)) {
+			shouldProcess = true;  // Female part, male enabled
+		}
+
+		if (!shouldProcess) {
 			if (loggableTypes.contains(headPartType)) {
-				skippedByType[headPartType]++;
+				if (isMale && !isFemale && !settings.IsFemaleEnabled(headPartType)) {
+					skippedByType[headPartType].second++;  // Skipped due to female disabled
+				} else if (!isMale && isFemale && !settings.IsMaleEnabled(headPartType)) {
+					skippedByType[headPartType].first++;  // Skipped due to male disabled
+				}
 			}
 			continue;
 		}
@@ -95,17 +110,13 @@ void Unisexy::DoSexyStuff()
 			newHeadPart->morphs[i] = headPart->morphs[i];
 		}
 
-		// Flip gender flags
-		using Flag = RE::BGSHeadPart::Flag;
-		auto& flags = newHeadPart->flags;
-		const bool isMale = flags.all(Flag::kMale);
-		const bool isFemale = flags.all(Flag::kFemale);
-		if (isMale && !isFemale) {
-			flags.reset(Flag::kMale);
-			flags.set(Flag::kFemale);
-		} else if (!isMale && isFemale) {
-			flags.reset(Flag::kFemale);
-			flags.set(Flag::kMale);
+		// Flip gender flags based on settings
+		if (isMale && !isFemale && settings.IsFemaleEnabled(headPartType)) {
+			newHeadPart->flags.reset(Flag::kMale);
+			newHeadPart->flags.set(Flag::kFemale);
+		} else if (!isMale && isFemale && settings.IsMaleEnabled(headPartType)) {
+			newHeadPart->flags.reset(Flag::kFemale);
+			newHeadPart->flags.set(Flag::kMale);
 		}
 
 		const RE::TESFile* targetFile = GetFileFromFormID(headPart->formID);
@@ -147,12 +158,17 @@ void Unisexy::DoSexyStuff()
 	bool loggedAnySkips = false;
 	for (const auto& type : loggableTypes) {
 		auto it = skippedByType.find(type);
-		if (it != skippedByType.end() && it->second > 0) {
+		if (it != skippedByType.end() && (it->second.first > 0 || it->second.second > 0)) {
 			if (!loggedAnySkips) {
 				logger::info("Skipped head parts due to disabled types in Unisexy.ini:");
 				loggedAnySkips = true;
 			}
-			logger::info("  {}: {}", Settings::GetHeadPartTypeName(type), it->second);
+			if (it->second.first > 0) {
+				logger::info("  {} (Male): {}", Settings::GetHeadPartTypeName(type), it->second.first);
+			}
+			if (it->second.second > 0) {
+				logger::info("  {} (Female): {}", Settings::GetHeadPartTypeName(type), it->second.second);
+			}
 		}
 	}
 	if (!loggedAnySkips) {
