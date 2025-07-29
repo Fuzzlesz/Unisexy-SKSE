@@ -23,12 +23,13 @@ void Unisexy::DoSexyStuff()
 	FormIDManager formIDManager;
 	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // Pair: male skips, female skips
 
-	// We want labelled types for logging
+	// Include kMisc in loggable types
 	static const std::set<RE::BGSHeadPart::HeadPartType> loggableTypes = {
 		RE::BGSHeadPart::HeadPartType::kHair,
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
 		RE::BGSHeadPart::HeadPartType::kScar,
-		RE::BGSHeadPart::HeadPartType::kEyebrows
+		RE::BGSHeadPart::HeadPartType::kEyebrows,
+		RE::BGSHeadPart::HeadPartType::kMisc  // Added for kMisc headparts
 	};
 
 	std::set<std::string> existingEditorIDs;
@@ -53,8 +54,18 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 
-		// Skip if the head part type isn’t enabled for the target gender
 		auto headPartType = static_cast<RE::BGSHeadPart::HeadPartType>(headPart->type.get());
+
+		// Skip kMisc headparts without kExtraPart flag
+		if (headPartType == RE::BGSHeadPart::HeadPartType::kMisc && !headPart->flags.all(RE::BGSHeadPart::Flag::kIsExtraPart)) {
+			if (settings.IsVerboseLogging()) {
+				logger::info("Skipping kMisc head part without kExtraPart flag: {} [{:08X}]",
+					headPart->GetFormEditorID(), headPart->formID);
+			}
+			continue;
+		}
+
+		// Determine if the headpart should be processed based on gender settings
 		using Flag = RE::BGSHeadPart::Flag;
 		const bool isMale = headPart->flags.all(Flag::kMale);
 		const bool isFemale = headPart->flags.all(Flag::kFemale);
