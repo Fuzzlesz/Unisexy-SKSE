@@ -30,7 +30,7 @@ void Settings::Load()
 	logger::info("Loading settings from {}", iniPath);
 
 	bool needsUpdate = false;
-	bool hasOldKeys = false;  // Declare hasOldKeys at function scope
+	bool hasOldKeys = false;
 	if (ini.LoadFile(iniPath.c_str()) >= SI_OK) {
 		// Check for old format keys
 		hasOldKeys = ini.KeyExists("HeadPartTypes", "Hair") ||
@@ -45,10 +45,11 @@ void Settings::Load()
 
 	// Set defaults
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair] = { true, true };
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { false, false };
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc] = { true, true };  // Tied to kHair defaults for hairlines, not separately configurable
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = { false, false };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = { false, false };
-	_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc] = { false, false };
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { false, false };
+
 	_verboseLogging = false;
 	_disableVanillaParts = false;
 
@@ -75,9 +76,11 @@ void Settings::Load()
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled = ini.GetBoolValue(section, "FacialHairFemale", false, &foundValue);
 		logger::info("Setting {}::FacialHairFemale = {} {}", section, _enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled, foundValue ? "" : "(default)");
 
-		
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = true;    // Not user-configurable
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = true;  // Not user-configurable
+		// Tie kMisc to kHair settings
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = _enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].maleEnabled;
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = _enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].femaleEnabled;
+		logger::info("Setting {}::MiscMale = {} (tied to HairMale)", section, _enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled);
+		logger::info("Setting {}::MiscFemale = {} (tied to HairFemale)", section, _enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled);
 
 		_verboseLogging = ini.GetBoolValue("Debug", "VerboseLogging", false, &foundValue);
 		logger::info("Setting Debug::VerboseLogging = {} {}", _verboseLogging, foundValue ? "" : "(default)");
@@ -112,10 +115,13 @@ void Settings::Load()
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled = facialHairValue;
 		logger::info("Mapping old {}::FacialHair = {} to FacialHairMale and FacialHairFemale", section, facialHairValue);
 
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = true;    // Not user-configurable
-		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = true;  // Not user-configurable
+		// Tie kMisc to kHair settings
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled = _enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].maleEnabled;
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled = _enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].femaleEnabled;
+		logger::info("Setting {}::MiscMale = {} (tied to HairMale)", section, _enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].maleEnabled);
+		logger::info("Setting {}::MiscFemale = {} (tied to HairFemale)", section, _enabledTypes[RE::BGSHeadPart::HeadPartType::kMisc].femaleEnabled);
 
-		// Debug settings remain unchanged, as they are not affected by old format
+		// Debug settings remain unchanged
 		_verboseLogging = ini.GetBoolValue("Debug", "VerboseLogging", false, &foundValue);
 		logger::info("Setting Debug::VerboseLogging = {} {}", _verboseLogging, foundValue ? "" : "(default)");
 		_disableVanillaParts = ini.GetBoolValue("Debug", "DisableVanillaParts", false, &foundValue);
