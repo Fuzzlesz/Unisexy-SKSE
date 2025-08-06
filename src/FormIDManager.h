@@ -1,17 +1,17 @@
 #pragma once
 
 #include "RE/Skyrim.h"
-#include <unordered_map>
+#include <map>
 
 class FormIDManager
 {
 public:
 	FormIDManager();
-
 	bool AssignFormID(RE::TESForm* form, const RE::TESFile* targetFile);
 
 private:
-	std::unordered_map<const RE::TESFile*, std::uint32_t> formCounts_;
+	std::map<const RE::TESFile*, std::uint32_t> formCounts_;       // Next FormID per plugin
+	std::map<const RE::TESFile*, std::uint32_t> formCountsTotal_;  // Total forms assigned per plugin
 };
 
 const RE::TESFile* GetFileFromFormID(std::uint32_t formID);
