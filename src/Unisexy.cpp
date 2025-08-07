@@ -157,7 +157,7 @@ void Unisexy::DoSexyStuff()
 		}
 
 		// Disable vanilla head part after successful creation if setting is enabled
-		if (settings.IsDisableVanillaParts()) {
+		if (settings.IsShowOnlyUnisexy()) {
 			headPart->flags.reset(RE::BGSHeadPart::Flag::kPlayable);
 			disabledVanillaCount++;
 			if (settings.IsVerboseLogging()) {

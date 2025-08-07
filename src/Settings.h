@@ -11,7 +11,7 @@ public:
 	[[nodiscard]] bool IsMaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
 	[[nodiscard]] bool IsFemaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
 	[[nodiscard]] bool IsVerboseLogging() const;
-	[[nodiscard]] bool IsDisableVanillaParts() const;
+	[[nodiscard]] bool IsShowOnlyUnisexy() const;
 	[[nodiscard]] static std::string GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type);
 
 private:
@@ -22,5 +22,5 @@ private:
 	};
 	std::map<RE::BGSHeadPart::HeadPartType, HeadPartSettings> _enabledTypes;
 	bool _verboseLogging = false;
-	bool _disableVanillaParts = false;
+	bool _showOnlyUnisexy = false;
 };
