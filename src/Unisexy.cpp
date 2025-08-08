@@ -1,5 +1,6 @@
 #include "Unisexy.h"
 #include "FormIDManager.h"
+#include "HeadPartUtils.h"
 #include "PCH.h"
 #include "Settings.h"
 
@@ -20,7 +21,7 @@ void Unisexy::DoSexyStuff()
 	int createdCount = 0;
 	int processedCount = 0;
 	int failedNoSourceFile = 0;
-	int disabledVanillaCount = 0;  // Track disabled vanilla parts
+	int disabledOriginalCount = 0;
 	FormIDManager formIDManager;
 	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // Pair: male skips, female skips
 
@@ -29,7 +30,6 @@ void Unisexy::DoSexyStuff()
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
 		RE::BGSHeadPart::HeadPartType::kScar,
 		RE::BGSHeadPart::HeadPartType::kEyebrows,
-		RE::BGSHeadPart::HeadPartType::kMisc
 	};
 
 	std::set<std::string> existingEditorIDs;
@@ -47,15 +47,6 @@ void Unisexy::DoSexyStuff()
 
 		auto headPartType = static_cast<RE::BGSHeadPart::HeadPartType>(headPart->type.get());
 
-		// Skip kMisc headparts without kExtraPart flag
-		if (headPartType == RE::BGSHeadPart::HeadPartType::kMisc && !headPart->flags.all(RE::BGSHeadPart::Flag::kIsExtraPart)) {
-			if (settings.IsVerboseLogging()) {
-				logger::info("Skipping kMisc head part without kExtraPart flag: {} [{:08X}]",
-					headPart->GetFormEditorID(), headPart->formID);
-			}
-			continue;
-		}
-
 		// Skip if the head part isn't playable
 		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
 			if (settings.IsVerboseLogging()) {
@@ -65,76 +56,79 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 
-		// Determine if the headpart should be processed based on gender settings
+		// Determine gender flags
 		using Flag = RE::BGSHeadPart::Flag;
 		const bool isMale = headPart->flags.all(Flag::kMale);
 		const bool isFemale = headPart->flags.all(Flag::kFemale);
-		bool shouldProcess = false;
+		const bool noFlag = !isMale && !isFemale;
 
-		if (isMale && !isFemale && settings.IsFemaleEnabled(headPartType)) {
-			shouldProcess = true;  // Male part, female enabled
-		} else if (!isMale && isFemale && settings.IsMaleEnabled(headPartType)) {
-			shouldProcess = true;  // Female part, male enabled
-		}
-
-		if (!shouldProcess) {
-			if (loggableTypes.contains(headPartType)) {
-				if (isMale && !isFemale && !settings.IsFemaleEnabled(headPartType)) {
-					skippedByType[headPartType].second++;  // Skipped due to female disabled
-				} else if (!isMale && isFemale && !settings.IsMaleEnabled(headPartType)) {
-					skippedByType[headPartType].first++;  // Skipped due to male disabled
+		// Handle unflagged head parts
+		if (noFlag) {
+			if (settings.IsShowOnlyUnisexy()) {
+				headPart->flags.reset(Flag::kPlayable);
+				disabledOriginalCount++;
+				if (settings.IsVerboseLogging()) {
+					logger::info("Disabled unisex head part: {} [{:08X}] (Type: {})",
+						headPart->GetFormEditorID(), headPart->formID,
+						Settings::GetHeadPartTypeName(headPartType));
 				}
+			} else if (settings.IsVerboseLogging()) {
+				logger::info("Skipping unisex head part: {} [{:08X}] (Type: {})",
+					headPart->GetFormEditorID(), headPart->formID,
+					Settings::GetHeadPartTypeName(headPartType));
 			}
 			continue;
 		}
 
-		const char* editorID = headPart->GetFormEditorID();
-		if (!editorID || editorID[0] == '\0') {
-			logger::info("Skipping head part with no EditorID (FormID: {:08X})", headPart->GetFormID());
+		// Determine if the head part should be processed
+		bool shouldProcess = false;
+		bool toFemale = false;
+
+		if (isMale && !isFemale && settings.IsFemaleEnabled(headPartType)) {
+			shouldProcess = true;
+			toFemale = true;
+		} else if (!isMale && isFemale && settings.IsMaleEnabled(headPartType)) {
+			shouldProcess = true;
+			toFemale = false;
+		} else {
+			if (loggableTypes.contains(headPartType)) {
+				if (isMale && !isFemale && !settings.IsFemaleEnabled(headPartType)) {
+					skippedByType[headPartType].second++;
+				} else if (!isMale && isFemale && !settings.IsMaleEnabled(headPartType)) {
+					skippedByType[headPartType].first++;
+				}
+			}
+			if (settings.IsVerboseLogging()) {
+				logger::info("Skipping head part: {} [{:08X}] (Type: {})",
+					headPart->GetFormEditorID(), headPart->formID,
+					Settings::GetHeadPartTypeName(headPartType));
+			}
 			continue;
 		}
 
-		std::string newEditorID = std::string(editorID) + "_Unisexy";
+		std::string newEditorID = HeadPartUtils::GenerateUnisexyEditorID(headPart);
+		if (newEditorID.empty()) {
+			continue;
+		}
+
 		if (existingEditorIDs.count(newEditorID) > 0) {
 			if (settings.IsVerboseLogging()) {
 				logger::info("Skipping duplicate head part: {}", newEditorID);
 			}
-			continue;  // Skip duplicates
-		}
-
-		auto* newHeadPart = headFactory->Create();
-		if (!newHeadPart) {
-			logger::error("Failed to create new head part instance for {}", newEditorID);
 			continue;
 		}
 
-		newHeadPart->SetFormEditorID(newEditorID.c_str());
-
-		// Copy properties from the original head part
-		newHeadPart->flags = headPart->flags;
-		newHeadPart->type = headPart->type;
-		newHeadPart->extraParts = headPart->extraParts;
-		newHeadPart->textureSet = headPart->textureSet;
-		newHeadPart->color = headPart->color;
-		newHeadPart->validRaces = headPart->validRaces;
-		for (size_t i = 0; i < RE::BGSHeadPart::MorphIndices::kTotal; i++) {
-			newHeadPart->morphs[i] = headPart->morphs[i];
-		}
-
-		// Flip gender flags based on settings
-		if (isMale && !isFemale && settings.IsFemaleEnabled(headPartType)) {
-			newHeadPart->flags.reset(Flag::kMale);
-			newHeadPart->flags.set(Flag::kFemale);
-		} else if (!isMale && isFemale && settings.IsMaleEnabled(headPartType)) {
-			newHeadPart->flags.reset(Flag::kFemale);
-			newHeadPart->flags.set(Flag::kMale);
+		auto* newHeadPart = HeadPartUtils::CreateUnisexyHeadPart(
+			headFactory, headPart, newEditorID, toFemale, settings);
+		if (!newHeadPart) {
+			continue;
 		}
 
 		const RE::TESFile* targetFile = GetFileFromFormID(headPart->formID);
 		if (!targetFile) {
 			failedNoSourceFile++;
 			logger::error("No source file found for head part {} [{:08X}]. Skipping.",
-				editorID, headPart->formID);
+				headPart->GetFormEditorID(), headPart->formID);
 			delete newHeadPart;
 			continue;
 		}
@@ -143,6 +137,19 @@ void Unisexy::DoSexyStuff()
 			logger::error("Failed to assign FormID for {}", newEditorID);
 			delete newHeadPart;
 			continue;
+		}
+
+		// Process extra parts for hair, beard, and brows
+		if (headPartType == RE::BGSHeadPart::HeadPartType::kHair ||
+			headPartType == RE::BGSHeadPart::HeadPartType::kFacialHair ||
+			headPartType == RE::BGSHeadPart::HeadPartType::kEyebrows) {
+			if (!HeadPartUtils::ProcessExtraParts(
+					newHeadPart, headPart, formIDManager, targetFile,
+					existingEditorIDs, settings, createdCount)) {
+				logger::error("Failed to process extra parts for {}", newEditorID);
+				delete newHeadPart;
+				continue;
+			}
 		}
 
 		dataHandler.AddFormToDataHandler(newHeadPart);
@@ -159,9 +166,9 @@ void Unisexy::DoSexyStuff()
 		// Disable vanilla head part after successful creation if setting is enabled
 		if (settings.IsShowOnlyUnisexy()) {
 			headPart->flags.reset(RE::BGSHeadPart::Flag::kPlayable);
-			disabledVanillaCount++;
+			disabledOriginalCount++;
 			if (settings.IsVerboseLogging()) {
-				logger::info("Disabled vanilla head part: {} [{:08X}] (Type: {})",
+				logger::info("Disabled original head part: {} [{:08X}] (Type: {})",
 					headPart->GetFormEditorID(), headPart->formID,
 					Settings::GetHeadPartTypeName(headPartType));
 			}
@@ -170,8 +177,8 @@ void Unisexy::DoSexyStuff()
 
 	auto endTime = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-	logger::info("Finished processing in {} ms. Processed {} head parts, created {} new parts, disabled {} vanilla parts.",
-		duration, processedCount, createdCount, disabledVanillaCount);
+	logger::info("Finished processing in {} ms. Processed {} head parts, created {} new parts, disabled {} original parts.",
+		duration, processedCount, createdCount, disabledOriginalCount);
 
 	if (failedNoSourceFile > 0) {
 		logger::info("Failed to process {} head parts due to missing source files.", failedNoSourceFile);
