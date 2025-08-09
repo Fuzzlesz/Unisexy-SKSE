@@ -28,7 +28,7 @@ void Unisexy::DoSexyStuff()
 	// Track skipped parts by type and gender for summary reporting
 	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // male skips, female skips
 
-	// Only log skips for these major types to avoid spam
+	// Only log skips and process extra parts for these major types to avoid spam
 	static const std::set<RE::BGSHeadPart::HeadPartType> reportableTypes = {
 		RE::BGSHeadPart::HeadPartType::kHair,
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
@@ -55,7 +55,7 @@ void Unisexy::DoSexyStuff()
 
 		// Skip non-playable head parts
 		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
-			if (settings.IsVerboseLogging()) {
+			if (settings.IsVerboseLogging() && reportableTypes.contains(headPartType)) {
 				logger::info("Skipping non-playable head part: {} [{:08X}]",
 					headPart->GetFormEditorID(), headPart->formID);
 			}
@@ -64,10 +64,6 @@ void Unisexy::DoSexyStuff()
 
 		// Skip kMisc head parts as they are not player selectable
 		if (headPartType == RE::BGSHeadPart::HeadPartType::kMisc) {
-			if (settings.IsVerboseLogging()) {
-				logger::info("Skipping kMisc head part: {} [{:08X}]",
-					headPart->GetFormEditorID(), headPart->formID);
-			}
 			continue;
 		}
 
@@ -87,10 +83,6 @@ void Unisexy::DoSexyStuff()
 						headPart->GetFormEditorID(), headPart->formID,
 						Settings::GetHeadPartTypeName(headPartType));
 				}
-			} else if (settings.IsVerboseLogging()) {
-				logger::info("Skipping genderless head part: {} [{:08X}] (Type: {})",
-					headPart->GetFormEditorID(), headPart->formID,
-					Settings::GetHeadPartTypeName(headPartType));
 			}
 			continue;
 		}
@@ -115,11 +107,6 @@ void Unisexy::DoSexyStuff()
 				} else if (!isMale && isFemale && !settings.IsMaleEnabled(headPartType)) {
 					skippedByType[headPartType].first++;  // Male conversion disabled
 				}
-			}
-			if (settings.IsVerboseLogging()) {
-				logger::info("Skipping head part: {} [{:08X}] (Type: {}) - conversion disabled",
-					headPart->GetFormEditorID(), headPart->formID,
-					Settings::GetHeadPartTypeName(headPartType));
 			}
 			continue;
 		}
@@ -146,7 +133,7 @@ void Unisexy::DoSexyStuff()
 		}
 
 		// Get source file for FormID assignment
-		const RE::TESFile* targetFile = GetFileFromFormID(headPart->formID);
+		const RE::TESFile* targetFile = headPart->GetFile();
 		if (!targetFile) {
 			failedNoSourceFile++;
 			logger::error("No source file found for head part {} [{:08X}]. Skipping.",
@@ -162,10 +149,11 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 
-		// Process extra parts for head part types that support them
-		if (headPartType == RE::BGSHeadPart::HeadPartType::kHair ||
-			headPartType == RE::BGSHeadPart::HeadPartType::kFacialHair ||
-			headPartType == RE::BGSHeadPart::HeadPartType::kEyebrows) {
+		// Set the file for the new head part
+		newHeadPart->SetFile(const_cast<RE::TESFile*>(targetFile));
+
+		// Process extra parts
+		if (reportableTypes.contains(headPartType)) {
 			if (!HeadPartUtils::ProcessExtraParts(
 					newHeadPart, headPart, formIDManager, targetFile,
 					existingEditorIDs, settings, createdCount)) {
@@ -216,7 +204,7 @@ void Unisexy::DoSexyStuff()
 			const auto it = skippedByType.find(type);
 			if (it != skippedByType.end() && (it->second.first > 0 || it->second.second > 0)) {
 				if (!loggedAnySkips) {
-					logger::info("Skipped head parts due to disabled conversion types in Unisexy.ini:");
+					logger::info("Skipped head parts due to disabled settings:");
 					loggedAnySkips = true;
 				}
 				if (it->second.first > 0) {
@@ -228,7 +216,7 @@ void Unisexy::DoSexyStuff()
 			}
 		}
 		if (!loggedAnySkips) {
-			logger::info("No head parts were skipped due to disabled conversion types.");
+			logger::info("No head parts were skipped due to disabled settings.");
 		}
 	}
 }

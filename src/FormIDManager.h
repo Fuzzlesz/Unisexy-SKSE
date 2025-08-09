@@ -13,8 +13,7 @@ public:
 	bool AssignFormID(RE::TESForm* form, const RE::TESFile* targetFile);
 
 private:
-	std::map<const RE::TESFile*, std::uint32_t> formCounts_;       // Current FormID counter per plugin
-	std::map<const RE::TESFile*, std::uint32_t> formCountsTotal_;  // Total forms assigned per plugin (for tracking)
+	std::map<const RE::TESFile*, std::uint32_t> formCounts_;  // Current FormID counter per plugin
 };
 
 // Utility function to determine which plugin file a FormID belongs to
