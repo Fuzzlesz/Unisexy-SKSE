@@ -62,6 +62,15 @@ void Unisexy::DoSexyStuff()
 			continue;
 		}
 
+		// Skip kMisc head parts as they are not player selectable
+		if (headPartType == RE::BGSHeadPart::HeadPartType::kMisc) {
+			if (settings.IsVerboseLogging()) {
+				logger::info("Skipping kMisc head part: {} [{:08X}]",
+					headPart->GetFormEditorID(), headPart->formID);
+			}
+			continue;
+		}
+
 		// Analyze gender flags
 		using Flag = RE::BGSHeadPart::Flag;
 		const bool isMale = headPart->flags.all(Flag::kMale);
@@ -180,7 +189,7 @@ void Unisexy::DoSexyStuff()
 
 		// Disable original head part if configured to show only Unisexy versions
 		if (settings.IsShowOnlyUnisexy()) {
-			headPart->flags.reset(RE::BGSHeadPart::Flag::kPlayable);
+			headPart->flags.reset(Flag::kPlayable);
 			disabledOriginalCount++;
 			if (settings.IsVerboseLogging()) {
 				logger::info("Disabled original head part: {} [{:08X}] (Type: {})",
