@@ -7,13 +7,21 @@
 
 namespace HeadPartUtils
 {
+	// Generate a Unisexy EditorID for the given head part
+	// Returns empty string if the head part has no EditorID
 	std::string GenerateUnisexyEditorID(const RE::BGSHeadPart* a_headPart);
+
+	// Create a gender-flipped copy of the source head part
+	// Returns nullptr only if memory allocation fails
 	RE::BGSHeadPart* CreateUnisexyHeadPart(
 		RE::IFormFactory* a_factory,
 		const RE::BGSHeadPart* a_sourcePart,
 		const std::string& a_newEditorID,
 		bool a_toFemale,
 		const Settings& a_settings);
+
+	// Process and create gender-flipped versions of extra parts
+	// Updates a_createdCount with number of extra parts created
 	bool ProcessExtraParts(
 		RE::BGSHeadPart* a_newHeadPart,
 		const RE::BGSHeadPart* a_sourcePart,
