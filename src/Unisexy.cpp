@@ -201,32 +201,34 @@ void Unisexy::DoSexyStuff()
 
 	// Calculate processing time and log summary
 	const auto endTime = std::chrono::high_resolution_clock::now();
-	const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-	logger::info("Processing completed in {} ms. Processed {} head parts, created {} new parts, disabled {} original parts.",
+	const auto duration = std::chrono::duration<double>(endTime - startTime).count();
+	logger::info("Processing completed in {:.2f} seconds. Processed {} head parts, created {} new parts, disabled {} original parts.",
 		duration, processedCount, createdCount, disabledOriginalCount);
 
 	if (failedNoSourceFile > 0) {
 		logger::info("Failed to process {} head parts due to missing source files.", failedNoSourceFile);
 	}
 
-	// Report skipped parts summary
-	bool loggedAnySkips = false;
-	for (const auto& type : reportableTypes) {
-		const auto it = skippedByType.find(type);
-		if (it != skippedByType.end() && (it->second.first > 0 || it->second.second > 0)) {
-			if (!loggedAnySkips) {
-				logger::info("Skipped head parts due to disabled conversion types in Unisexy.ini:");
-				loggedAnySkips = true;
-			}
-			if (it->second.first > 0) {
-				logger::info("  {} (Male conversion): {}", Settings::GetHeadPartTypeName(type), it->second.first);
-			}
-			if (it->second.second > 0) {
-				logger::info("  {} (Female conversion): {}", Settings::GetHeadPartTypeName(type), it->second.second);
+	// Report skipped parts summary only if verbose logging is enabled
+	if (settings.IsVerboseLogging()) {
+		bool loggedAnySkips = false;
+		for (const auto& type : reportableTypes) {
+			const auto it = skippedByType.find(type);
+			if (it != skippedByType.end() && (it->second.first > 0 || it->second.second > 0)) {
+				if (!loggedAnySkips) {
+					logger::info("Skipped head parts due to disabled conversion types in Unisexy.ini:");
+					loggedAnySkips = true;
+				}
+				if (it->second.first > 0) {
+					logger::info("  {} (Male conversion): {}", Settings::GetHeadPartTypeName(type), it->second.first);
+				}
+				if (it->second.second > 0) {
+					logger::info("  {} (Female conversion): {}", Settings::GetHeadPartTypeName(type), it->second.second);
+				}
 			}
 		}
-	}
-	if (!loggedAnySkips) {
-		logger::info("No head parts were skipped due to disabled conversion types.");
+		if (!loggedAnySkips) {
+			logger::info("No head parts were skipped due to disabled conversion types.");
+		}
 	}
 }

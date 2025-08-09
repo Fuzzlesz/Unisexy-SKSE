@@ -277,7 +277,7 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 	ini.SetValue("Debug", "VerboseLogging", _verboseLogging ? "true" : "false",
 		"\n; Enable detailed logging for debugging");
 	ini.SetValue("Debug", "ShowOnlyUnisexy", _showOnlyUnisexy ? "true" : "false",
-		"; Hide vanilla head parts, showing only Unisexy-created versions");
+		"\n; Hide vanilla head parts, showing only Unisexy-created versions");
 
 	// Clean up legacy keys that might still exist
 	ini.Delete("HeadPartTypes", "Hair");
