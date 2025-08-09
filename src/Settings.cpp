@@ -3,7 +3,7 @@
 
 namespace
 {
-	constexpr bool INI_DEBUG_LOGGING = true;  // Set to false for production
+	constexpr bool INI_DEBUG_LOGGING = false;
 }
 
 void Settings::Load()
