@@ -1,17 +1,21 @@
 #pragma once
 
 #include "RE/Skyrim.h"
-#include <unordered_map>
+#include <map>
 
 class FormIDManager
 {
 public:
 	FormIDManager();
 
+	// Assign a unique FormID to the given form within the target plugin's namespace
+	// Returns false if assignment fails due to conflicts or exhausted FormID range
 	bool AssignFormID(RE::TESForm* form, const RE::TESFile* targetFile);
 
 private:
-	std::unordered_map<const RE::TESFile*, std::uint32_t> formCounts_;
+	std::map<const RE::TESFile*, std::uint32_t> formCounts_;  // Current FormID counter per plugin
 };
 
+// Utility function to determine which plugin file a FormID belongs to
+// Returns nullptr if the FormID doesn't correspond to a loaded plugin
 const RE::TESFile* GetFileFromFormID(std::uint32_t formID);

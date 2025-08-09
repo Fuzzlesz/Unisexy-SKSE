@@ -1,26 +1,41 @@
 #pragma once
 
-#include "RE/Skyrim.h"
+#include "RE/B/BGSHeadPart.h"
 #include <ClibUtil/simpleIni.hpp>
 
 class Settings : public clib_util::singleton::ISingleton<Settings>
 {
 public:
-	Settings() = default;
+	// Load settings from INI file, handling legacy format migration
 	void Load();
-	[[nodiscard]] bool IsMaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
-	[[nodiscard]] bool IsFemaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
-	[[nodiscard]] bool IsVerboseLogging() const;
-	[[nodiscard]] bool IsDisableVanillaParts() const;
-	[[nodiscard]] static std::string GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type);
+
+	// Check if male conversion is enabled for given head part type
+	bool IsMaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
+
+	// Check if female conversion is enabled for given head part type
+	bool IsFemaleEnabled(RE::BGSHeadPart::HeadPartType a_type) const;
+
+	// Check if verbose logging is enabled
+	bool IsVerboseLogging() const;
+
+	// Check if only Unisexy parts should be shown (vanilla parts hidden)
+	bool IsShowOnlyUnisexy() const;
+
+	// Get human-readable name for head part type
+	static std::string GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type);
 
 private:
-	struct HeadPartSettings
+	// Gender-specific settings for each head part type
+	struct GenderSettings
 	{
-		bool maleEnabled = true;
-		bool femaleEnabled = true;
+		bool maleEnabled = false;    // Enable male conversion (female -> male)
+		bool femaleEnabled = false;  // Enable female conversion (male -> female)
 	};
-	std::map<RE::BGSHeadPart::HeadPartType, HeadPartSettings> _enabledTypes;
+
+	// Save configuration to INI file
+	void SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath);
+
+	std::map<RE::BGSHeadPart::HeadPartType, GenderSettings> _enabledTypes;
 	bool _verboseLogging = false;
-	bool _disableVanillaParts = false;
+	bool _showOnlyUnisexy = false;
 };
