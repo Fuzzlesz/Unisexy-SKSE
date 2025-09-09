@@ -100,8 +100,8 @@ bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFil
 		}
 
 		if (isAvailable) {
-			// Successfully found available FormID - assign it and update counter
-			form->formID = newFormID;
+			// Successfully found available FormID - assign it using SetFormID and update counter
+			form->SetFormID(newFormID, false);
 			counter = currentCounter - 1;  // Update the persistent counter
 
 			if (verboseLogging) {
