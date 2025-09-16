@@ -45,7 +45,7 @@ namespace HeadPartUtils
 		// Set the new EditorID
 		newHeadPart->SetFormEditorID(a_newEditorID.c_str());
 
-		// Copy all properties from source - preserves original design
+		// Copy all properties from source
 		newHeadPart->flags = a_sourcePart->flags;
 		newHeadPart->type = a_sourcePart->type;
 		newHeadPart->extraParts = a_sourcePart->extraParts;
@@ -91,59 +91,118 @@ namespace HeadPartUtils
 		const auto& extraParts = a_sourcePart->extraParts;
 		if (extraParts.empty()) {
 			if (a_settings.IsVerboseLogging()) {
-				const char* headPartEditorID = a_newHeadPart->GetFormEditorID() ?
-				                                   a_newHeadPart->GetFormEditorID() :
-				                                   "NoEditorID";
 				logger::debug("No extra parts to process for head part {} [{:08X}]",
-					headPartEditorID, a_newHeadPart->formID);
+					a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
+					a_newHeadPart->formID);
 			}
 			return true;
 		}
 
-		const bool verboseLogging = a_settings.IsVerboseLogging();
-		const bool targetIsFemale = a_newHeadPart->flags.all(RE::BGSHeadPart::Flag::kFemale);
+		// Get factory for creating extra parts
 		const auto headFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::BGSHeadPart>();
-		if (!headFactory) {
-			const char* headPartEditorID = a_newHeadPart->GetFormEditorID() ?
-			                                   a_newHeadPart->GetFormEditorID() :
-			                                   "NoEditorID";
-			logger::error("Could not get BGSHeadPart factory for extra parts of head part {} [{:08X}]",
-				headPartEditorID, a_newHeadPart->formID);
-			return false;
-		}
+		assert(headFactory);
 
-		RE::BSTArray<RE::BGSHeadPart*, RE::BSTArrayHeapAllocator> newExtraParts;
+		// Determine target gender from new head part's flags (cache the result)
+		const bool targetIsFemale = a_newHeadPart->flags.all(RE::BGSHeadPart::Flag::kFemale);
+
+		// Pre-allocate result array to avoid reallocations
+		RE::BSTArray<RE::BGSHeadPart*> newExtraParts;
 		newExtraParts.reserve(extraParts.size());
+
+		// Cache verbose logging setting
+		const bool verboseLogging = a_settings.IsVerboseLogging();
+
+		// Cache data handler reference
+		auto& dataHandler = *RE::TESDataHandler::GetSingleton();
+
+		// Process each extra part
+		if (verboseLogging) {
+			logger::info("Processing {} extra parts for head part {} [{:08X}] -> {} [{:08X}]",
+				extraParts.size(),
+				a_sourcePart->GetFormEditorID() ? a_sourcePart->GetFormEditorID() : "NoEditorID",
+				a_sourcePart->formID,
+				a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
+				a_newHeadPart->formID);
+		}
 
 		for (const auto* extraPart : extraParts) {
 			if (!extraPart) {
-				newExtraParts.push_back(nullptr);
-				continue;
-			}
-
-			const auto newEditorID = GenerateUnisexyEditorID(extraPart);
-			if (newEditorID.empty()) {
-				newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
-				continue;
-			}
-
-			// Check if EditorID already exists
-			RE::BGSHeadPart* existingPart = nullptr;
-			for (const auto* form : RE::TESDataHandler::GetSingleton()->GetFormArray<RE::BGSHeadPart>()) {
-				if (form && form->GetFormEditorID() && newEditorID == form->GetFormEditorID()) {
-					existingPart = const_cast<RE::BGSHeadPart*>(form);  // Remove const for assignment
-					break;
-				}
-			}
-
-			if (existingPart) {
-				newExtraParts.push_back(existingPart);
 				if (verboseLogging) {
-					const char* headPartEditorID = a_newHeadPart->GetFormEditorID() ?
-					                                   a_newHeadPart->GetFormEditorID() :
-					                                   "NoEditorID";
-					logger::info("Using existing extra part {} [{:08X}] for head part {} [{:08X}]",
-						newEditorID.c_str(), existingPart->formID, headPartEditorID, a_newHeadPart->formID);
+					logger::warn("Null extra part found in source head part {} [{:08X}]",
+						a_sourcePart->GetFormEditorID() ? a_sourcePart->GetFormEditorID() : "NoEditorID",
+						a_sourcePart->formID);
+				}
+				continue;
+			}
+
+			// Analyze extra part gender compatibility
+			const auto extraFlags = extraPart->flags;
+			const bool extraIsMale = extraFlags.all(RE::BGSHeadPart::Flag::kMale);
+			const bool extraIsFemale = extraFlags.all(RE::BGSHeadPart::Flag::kFemale);
+			const bool extraIsGenderless = !extraIsMale && !extraIsFemale;
+
+			// Determine if gender flip is needed
+			bool needsGenderFlip = false;
+
+			if (!extraIsGenderless) {
+				needsGenderFlip = (extraIsMale && targetIsFemale) || (extraIsFemale && !targetIsFemale);
+			}
+
+			if (!needsGenderFlip) {
+				newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
+				if (verboseLogging) {
+					logger::debug("Using original extra part: {} [{:08X}] (Type: {})",
+						extraPart->GetFormEditorID() ? extraPart->GetFormEditorID() : "NoEditorID",
+						extraPart->formID,
+						Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(extraPart->type.get())));
+				}
+				continue;
+			}
+
+			// Generate EditorID for gender-flipped extra part
+			const char* extraEditorID = extraPart->GetFormEditorID();
+			std::string newEditorID;
+			if (extraEditorID) {
+				newEditorID.reserve(strlen(extraEditorID) + 8);
+				newEditorID = extraEditorID;
+				newEditorID += "_Unisexy";
+			} else {
+				newEditorID = fmt::format("ExtraPart_{:08X}_Unisexy", extraPart->formID);
+			}
+
+			// Check if we already created this extra part
+			auto existingIt = a_existingEditorIDs.find(newEditorID);
+			if (existingIt != a_existingEditorIDs.end()) {
+				// Search for existing version to reuse
+				bool foundExisting = false;
+				for (const auto& existingHeadPart : dataHandler.GetFormArray<RE::BGSHeadPart>()) {
+					if (existingHeadPart && existingHeadPart->GetFormEditorID()) {
+						const char* existingID = existingHeadPart->GetFormEditorID();
+						if (existingID && newEditorID == existingID) {
+							newExtraParts.push_back(existingHeadPart);
+							foundExisting = true;
+							if (verboseLogging) {
+								logger::info("Reusing existing extra part: {} [{:08X}] (Type: {}) for head part {} [{:08X}]",
+									newEditorID,
+									existingHeadPart->formID,
+									Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(existingHeadPart->type.get())),
+									a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
+									a_newHeadPart->formID);
+							}
+							break;
+						}
+					}
+				}
+
+				if (!foundExisting) {
+					// Fall back to original if we can't find the existing version
+					newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
+					if (verboseLogging) {
+						logger::warn("Could not find existing extra part {}, using original {} [{:08X}]",
+							newEditorID,
+							extraPart->GetFormEditorID() ? extraPart->GetFormEditorID() : "NoEditorID",
+							extraPart->formID);
+					}
 				}
 				continue;
 			}
@@ -153,23 +212,26 @@ namespace HeadPartUtils
 				headFactory, extraPart, newEditorID, targetIsFemale, a_settings);
 
 			if (!newExtraPart) {
+				// Fall back to original extra part if creation fails
 				newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
 				logger::error("Failed to create gender-flipped extra part for {} [{:08X}] (Source: {} [{:08X}])",
 					extraPart->GetFormEditorID() ? extraPart->GetFormEditorID() : "NoEditorID",
 					extraPart->formID,
 					a_sourcePart->GetFormEditorID() ? a_sourcePart->GetFormEditorID() : "NoEditorID",
 					a_sourcePart->formID);
+				a_conflictDetails.emplace_back(newEditorID, 0, 0);  // Record failure
 				continue;
 			}
 
 			// Assign FormID and register with data handler
 			std::uint32_t conflictFormID = 0;
+
 			if (!a_formIDManager.AssignFormID(newExtraPart, a_targetFile, conflictFormID)) {
+				a_conflictDetails.emplace_back(newEditorID, conflictFormID, 0);
 				logger::error("Failed to assign FormID for extra part {} (Source: {} [{:08X}])",
-					newEditorID.c_str(),
+					newEditorID,
 					a_sourcePart->GetFormEditorID() ? a_sourcePart->GetFormEditorID() : "NoEditorID",
 					a_sourcePart->formID);
-				a_conflictDetails.emplace_back(newEditorID, conflictFormID, 0);
 				delete newExtraPart;
 				newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
 				continue;
@@ -182,53 +244,25 @@ namespace HeadPartUtils
 
 			// Set the file for the new extra part
 			newExtraPart->SetFile(const_cast<RE::TESFile*>(a_targetFile));
-			RE::TESDataHandler::GetSingleton()->AddFormToDataHandler(newExtraPart);
+			dataHandler.AddFormToDataHandler(newExtraPart);
 			a_existingEditorIDs.insert(newEditorID);
 			newExtraParts.push_back(newExtraPart);
 			a_createdCount++;
 
 			if (verboseLogging) {
-				const char* newPartEditorID = newExtraPart->GetFormEditorID() ?
-				                                  newExtraPart->GetFormEditorID() :
-				                                  "NoEditorID";
-				const char* headPartEditorID = a_newHeadPart->GetFormEditorID() ?
-				                                   a_newHeadPart->GetFormEditorID() :
-				                                   "NoEditorID";
-				const char* sourcePartEditorID = a_sourcePart->GetFormEditorID() ?
-				                                     a_sourcePart->GetFormEditorID() :
-				                                     "NoEditorID";
 				logger::info("Created extra part: {} [{:08X}] (Type: {}) for head part {} [{:08X}] (Source: {} [{:08X}])",
-					newPartEditorID,
+					newEditorID,
 					newExtraPart->formID,
 					Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(newExtraPart->type.get())),
-					headPartEditorID,
+					a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
 					a_newHeadPart->formID,
-					sourcePartEditorID,
+					a_sourcePart->GetFormEditorID() ? a_sourcePart->GetFormEditorID() : "NoEditorID",
 					a_sourcePart->formID);
 			}
 		}
 
 		// Assign all processed extra parts to the new head part
-		a_newHeadPart->extraParts = newExtraParts;
-
-		if (verboseLogging) {
-			const char* headPartEditorID = a_newHeadPart->GetFormEditorID() ?
-			                                   a_newHeadPart->GetFormEditorID() :
-			                                   "NoEditorID";
-			logger::info("Completed processing extra parts for head part {} [{:08X}]. Final extra parts:",
-				headPartEditorID, a_newHeadPart->formID);
-
-			for (const auto* part : a_newHeadPart->extraParts) {
-				if (part) {
-					const char* partEditorID = part->GetFormEditorID() ? part->GetFormEditorID() : "NoEditorID";
-					logger::info("  - {} [{:08X}] (Type: {})",
-						partEditorID,
-						part->formID,
-						Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(part->type.get())));
-				}
-			}
-		}
-
+		a_newHeadPart->extraParts = std::move(newExtraParts);
 		return true;
 	}
 }

@@ -48,6 +48,9 @@ void Unisexy::DoSexyStuff()
 		}
 	}
 
+	// Cache verbose logging setting
+	const bool verboseLogging = settings.IsVerboseLogging();
+
 	// Process each head part in the data handler
 	for (const auto& headPart : dataHandler.GetFormArray<RE::BGSHeadPart>()) {
 		if (!headPart) {
@@ -59,7 +62,7 @@ void Unisexy::DoSexyStuff()
 
 		// Skip non-playable head parts
 		if (!headPart->flags.all(RE::BGSHeadPart::Flag::kPlayable)) {
-			if (settings.IsVerboseLogging() && reportableTypes.contains(headPartType)) {
+			if (verboseLogging && reportableTypes.contains(headPartType)) {
 				logger::info("Skipping non-playable head part: {} [{:08X}]",
 					headPart->GetFormEditorID(), headPart->formID);
 			}
@@ -82,7 +85,7 @@ void Unisexy::DoSexyStuff()
 			if (settings.IsShowOnlyUnisexy()) {
 				headPart->flags.reset(Flag::kPlayable);
 				disabledOriginalCount++;
-				if (settings.IsVerboseLogging()) {
+				if (verboseLogging) {
 					logger::info("Disabled genderless head part: {} [{:08X}] (Type: {})",
 						headPart->GetFormEditorID(), headPart->formID,
 						Settings::GetHeadPartTypeName(headPartType));
@@ -124,7 +127,7 @@ void Unisexy::DoSexyStuff()
 
 		// Skip if we already created this head part
 		if (existingEditorIDs.count(newEditorID) > 0) {
-			if (settings.IsVerboseLogging()) {
+			if (verboseLogging) {
 				logger::info("Skipping duplicate head part: {}", newEditorID);
 			}
 			continue;
@@ -184,7 +187,7 @@ void Unisexy::DoSexyStuff()
 		existingEditorIDs.insert(newEditorID);
 		createdCount++;
 
-		if (settings.IsVerboseLogging()) {
+		if (verboseLogging) {
 			logger::info("Created head part: {} [{:08X}] (Type: {}) from source [{:08X}]",
 				newEditorID, newHeadPart->formID,
 				Settings::GetHeadPartTypeName(headPartType),
@@ -195,7 +198,7 @@ void Unisexy::DoSexyStuff()
 		if (settings.IsShowOnlyUnisexy()) {
 			headPart->flags.reset(Flag::kPlayable);
 			disabledOriginalCount++;
-			if (settings.IsVerboseLogging()) {
+			if (verboseLogging) {
 				logger::info("Disabled original head part: {} [{:08X}] (Type: {})",
 					headPart->GetFormEditorID(), headPart->formID,
 					Settings::GetHeadPartTypeName(headPartType));
@@ -214,7 +217,7 @@ void Unisexy::DoSexyStuff()
 	}
 
 	// Report skipped parts and warnings summary only if verbose logging is enabled
-	if (settings.IsVerboseLogging()) {
+	if (verboseLogging) {
 		bool loggedAnySkips = false;
 		for (const auto& type : reportableTypes) {
 			const auto it = skippedByType.find(type);
