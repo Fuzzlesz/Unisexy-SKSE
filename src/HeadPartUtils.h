@@ -22,6 +22,7 @@ namespace HeadPartUtils
 
 	// Process and create gender-flipped versions of extra parts
 	// Updates a_createdCount with number of extra parts created
+	// Appends FormID conflict details to a_conflictDetails
 	bool ProcessExtraParts(
 		RE::BGSHeadPart* a_newHeadPart,
 		const RE::BGSHeadPart* a_sourcePart,
@@ -29,5 +30,6 @@ namespace HeadPartUtils
 		const RE::TESFile* a_targetFile,
 		std::set<std::string>& a_existingEditorIDs,
 		const Settings& a_settings,
-		int& a_createdCount);
+		int& a_createdCount,
+		std::vector<std::tuple<std::string, std::uint32_t, std::uint32_t>>& a_conflictDetails);
 }

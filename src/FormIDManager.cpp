@@ -17,51 +17,59 @@ namespace
 	constexpr std::uint32_t ESP_HIGH_START = 0xFFFFFF;    // Starting FormID for ESP/ESM (counts down)
 	constexpr std::uint32_t ESP_INDEX_MASK = 0xFF000000;  // Mask for ESP/ESM index (bits 24-31)
 	constexpr std::uint32_t ESP_INDEX_SHIFT = 24;         // Bit shift for ESP/ESM index
-}
 
-// Global tracking of used ESL FormIDs to prevent conflicts across all ESL plugins
-static std::map<const RE::TESFile*, std::bitset<ESL_HIGH_START - FORMID_MIN + 1>> eslFormIDTracking;
+	// Generate starting FormID using only EditorID
+	std::uint32_t GenerateBaseFormID(const std::string& editorID, bool isLight)
+	{
+		// Use only EditorID for determinism across all plugins
+		std::hash<std::string> hasher;
+		size_t hash = hasher(editorID);
+		std::uint32_t maxFormID = isLight ? ESL_HIGH_START : ESP_HIGH_START;
+		std::uint32_t range = maxFormID - FORMID_MIN + 1;
+		return maxFormID - (static_cast<std::uint32_t>(hash % range));
+	}
+}
 
 FormIDManager::FormIDManager() {}
 
-bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFile)
+bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFile, std::uint32_t& outConflictFormID)
 {
+	// Validate inputs
 	if (!form || !targetFile) {
 		logger::error("Invalid form or target file provided for FormID assignment.");
 		return false;
 	}
 
-	// Get or initialize counter for this plugin
-	auto& counter = formCounts_[targetFile];
+	const char* editorID = form->GetFormEditorID();
+	if (!editorID || editorID[0] == '\0') {
+		logger::error("No EditorID for form in plugin: {}", targetFile->GetFilename());
+		return false;
+	}
+
+	// Get plugin properties and tracking
 	const bool isLight = targetFile->IsLight();
 	const bool verboseLogging = Settings::GetSingleton()->IsVerboseLogging();
+	auto& assignedIDs = assignedFormIDs_[targetFile];
 
-	// Initialize counter on first use
-	if (counter == 0) {
-		counter = isLight ? ESL_HIGH_START : ESP_HIGH_START;
-		if (verboseLogging) {
-			if (isLight) {
-				logger::info("Initialized FormID counter for ESL plugin {} to {:04X}",
-					targetFile->GetFilename(), counter);
-			} else {
-				logger::info("Initialized FormID counter for ESP/ESM plugin {} to {:06X}",
-					targetFile->GetFilename(), counter);
-			}
-		}
+	// Generate a deterministic counter for this EditorID
+	std::uint32_t counter = GenerateBaseFormID(editorID, isLight);
+	if (verboseLogging) {
+		logger::info("Generated FormID counter {:04X} for '{}'", counter, editorID);
 	}
 
 	std::uint32_t newFormID = 0;
 	std::uint32_t attemptCount = 0;
 	std::uint32_t currentCounter = counter;
+	outConflictFormID = 0;  // Initialize output parameter
 
 	// Attempt to find an available FormID
 	while (attemptCount < MAX_FORMID_ATTEMPTS) {
-		// Early validation - check if we've exhausted the FormID range
+		// Check FormID range
 		if (currentCounter < FORMID_MIN) {
 			if (isLight) {
-				logger::error("Exhausted ESL FormID range for plugin: {}", targetFile->GetFilename());
+				logger::error("Exhausted ESL FormID range for plugin: {}", std::string(targetFile->GetFilename()));
 			} else {
-				logger::error("Exhausted ESP/ESM FormID range for plugin: {}", targetFile->GetFilename());
+				logger::error("Exhausted ESP/ESM FormID range for plugin: {}", std::string(targetFile->GetFilename()));
 			}
 			return false;
 		}
@@ -71,80 +79,62 @@ bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFil
 			newFormID = ESL_FLAG |
 			            ((static_cast<std::uint32_t>(targetFile->smallFileCompileIndex) << ESL_INDEX_SHIFT) | currentCounter);
 		} else {
-			newFormID = (static_cast<std::uint32_t>(targetFile->compileIndex) << ESP_INDEX_SHIFT) | currentCounter;
+			newFormID = ((static_cast<std::uint32_t>(targetFile->compileIndex) << ESP_INDEX_SHIFT) | currentCounter);
 		}
 
-		// Validate FormID is not zero (invalid)
+		// Validate FormID
 		if (newFormID == 0) {
-			logger::error("Generated invalid FormID 0 for plugin: {}", targetFile->GetFilename());
+			logger::error("Generated invalid FormID 0 for plugin: {}", std::string(targetFile->GetFilename()));
 			return false;
 		}
 
-		// Check if FormID is available
+		// Check FormID availability
 		auto* existingForm = RE::TESDataHandler::GetSingleton()->LookupForm(newFormID, "");
-		bool isAvailable = !existingForm;
-
-		if (isAvailable && isLight) {
-			// Additional ESL conflict tracking per plugin
-			auto& eslTracking = eslFormIDTracking[targetFile];
-			if (currentCounter >= FORMID_MIN && currentCounter <= ESL_HIGH_START) {
-				const std::uint32_t eslSlot = currentCounter - FORMID_MIN;
-				if (eslSlot < eslTracking.size() && !eslTracking.test(eslSlot)) {
-					eslTracking.set(eslSlot);
-				} else {
-					isAvailable = false;  // Already used in our tracking
-				}
-			} else {
-				isAvailable = false;  // Out of valid ESL range
-			}
-		}
+		bool isAvailable = !existingForm && assignedIDs.find(newFormID) == assignedIDs.end();
 
 		if (isAvailable) {
-			// Successfully found available FormID - assign it using SetFormID and update counter
 			form->SetFormID(newFormID, false);
-			counter = currentCounter - 1;  // Update the persistent counter
-
+			assignedIDs.insert(newFormID);
 			if (verboseLogging) {
-				const char* editorID = form->GetFormEditorID() ? form->GetFormEditorID() : "Unknown";
 				logger::info("Assigned FormID {:08X} to '{}' in plugin '{}'",
-					newFormID, editorID, targetFile->GetFilename());
+					newFormID, editorID, std::string(targetFile->GetFilename()));
+				if (outConflictFormID != 0) {
+					logger::info("Resolved conflict for FormID {:08X} by assigning {:08X}", outConflictFormID, newFormID);
+				}
 			}
-
 			return true;
 		}
 
-		// Log conflict details for debugging
+		// Log conflict if verbose
 		if (verboseLogging) {
 			if (existingForm) {
-				const char* conflictEditorID = existingForm->GetFormEditorID() ?
-				                                   existingForm->GetFormEditorID() :
-				                                   "Unknown";
+				const char* conflictEditorID = existingForm->GetFormEditorID() ? existingForm->GetFormEditorID() : "Unknown";
 				logger::warn("FormID conflict {:08X} (Attempt {}/{}): Used by form '{}' (Type: {}) in plugin: {}",
 					newFormID, attemptCount + 1, MAX_FORMID_ATTEMPTS,
 					conflictEditorID, existingForm->GetObjectTypeName(),
-					targetFile->GetFilename());
-			} else if (isLight) {
-				logger::warn("ESL FormID {:08X} conflicts with internal tracking (Attempt {}/{})",
-					newFormID, attemptCount + 1, MAX_FORMID_ATTEMPTS);
+					std::string(targetFile->GetFilename()));
+			} else {
+				logger::warn("FormID {:08X} already assigned in plugin: {} (Attempt {}/{})",
+					newFormID, std::string(targetFile->GetFilename()), attemptCount + 1, MAX_FORMID_ATTEMPTS);
 			}
 		}
 
-		// Move to next FormID
+		// Store the conflicting FormID
+		outConflictFormID = newFormID;
+
+		// Try next FormID
 		currentCounter--;
 		attemptCount++;
 	}
 
-	// Failed to find an available FormID after all attempts
-	const char* editorID = form->GetFormEditorID() ? form->GetFormEditorID() : "Unknown";
-	logger::error("Failed to find available FormID for '{}' in plugin '{}' after {} attempts",
-		editorID, targetFile->GetFilename(), MAX_FORMID_ATTEMPTS);
+	logger::error("Failed to assign FormID for '{}' in plugin '{}' after {} attempts",
+		editorID, std::string(targetFile->GetFilename()), MAX_FORMID_ATTEMPTS);
 	return false;
 }
 
 const RE::TESFile* GetFileFromFormID(std::uint32_t formID)
 {
 	auto& dataHandler = *RE::TESDataHandler::GetSingleton();
-
 	if ((formID & ESL_FLAG) == ESL_FLAG) {
 		// Handle ESL (light plugin) FormID
 		const std::uint16_t smallIndex = static_cast<std::uint16_t>(

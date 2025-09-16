@@ -23,7 +23,11 @@ void Unisexy::DoSexyStuff()
 	int processedCount = 0;
 	int failedNoSourceFile = 0;
 	int disabledOriginalCount = 0;
+	int formIDConflictCount = 0;
+	int otherWarningCount = 0;
+
 	FormIDManager formIDManager;
+	std::vector<std::tuple<std::string, std::uint32_t, std::uint32_t>> formIDConflicts;  // Track conflict details (EditorID, Conflicting FormID, Final FormID)
 
 	// Track skipped parts by type and gender for summary reporting
 	std::map<RE::BGSHeadPart::HeadPartType, std::pair<int, int>> skippedByType;  // male skips, female skips
@@ -114,6 +118,7 @@ void Unisexy::DoSexyStuff()
 		// Generate EditorID for the new head part
 		const std::string newEditorID = HeadPartUtils::GenerateUnisexyEditorID(headPart);
 		if (newEditorID.empty()) {
+			otherWarningCount++;  // Increment for missing EditorID
 			continue;
 		}
 
@@ -129,6 +134,7 @@ void Unisexy::DoSexyStuff()
 		auto* newHeadPart = HeadPartUtils::CreateUnisexyHeadPart(
 			headFactory, headPart, newEditorID, toFemale, settings);
 		if (!newHeadPart) {
+			otherWarningCount++;  // Increment for memory allocation failure
 			continue;
 		}
 
@@ -143,10 +149,19 @@ void Unisexy::DoSexyStuff()
 		}
 
 		// Assign FormID to the new head part
-		if (!formIDManager.AssignFormID(newHeadPart, targetFile)) {
+		std::uint32_t conflictFormID = 0;
+		if (!formIDManager.AssignFormID(newHeadPart, targetFile, conflictFormID)) {
+			formIDConflictCount++;                                         // Increment for FormID conflict
+			formIDConflicts.emplace_back(newEditorID, conflictFormID, 0);  // Store conflict with no final FormID
 			logger::error("Failed to assign FormID for {}", newEditorID);
 			delete newHeadPart;
 			continue;
+		}
+
+		// Store conflict details if there was a conflict
+		if (conflictFormID != 0) {
+			formIDConflicts.emplace_back(newEditorID, conflictFormID, newHeadPart->formID);
+			formIDConflictCount++;  // Increment for resolved conflict
 		}
 
 		// Set the file for the new head part
@@ -156,8 +171,9 @@ void Unisexy::DoSexyStuff()
 		if (reportableTypes.contains(headPartType)) {
 			if (!HeadPartUtils::ProcessExtraParts(
 					newHeadPart, headPart, formIDManager, targetFile,
-					existingEditorIDs, settings, createdCount)) {
+					existingEditorIDs, settings, createdCount, formIDConflicts)) {
 				logger::error("Failed to process extra parts for {}", newEditorID);
+				otherWarningCount++;  // Increment for extra parts processing failure
 				delete newHeadPart;
 				continue;
 			}
@@ -197,7 +213,7 @@ void Unisexy::DoSexyStuff()
 		logger::info("Failed to process {} head parts due to missing source files.", failedNoSourceFile);
 	}
 
-	// Report skipped parts summary only if verbose logging is enabled
+	// Report skipped parts and warnings summary only if verbose logging is enabled
 	if (settings.IsVerboseLogging()) {
 		bool loggedAnySkips = false;
 		for (const auto& type : reportableTypes) {
@@ -217,6 +233,25 @@ void Unisexy::DoSexyStuff()
 		}
 		if (!loggedAnySkips) {
 			logger::info("No head parts were skipped due to disabled settings.");
+		}
+
+		// Log warnings summary
+		logger::info("Warning summary:");
+		logger::info("  FormID conflicts: {}", formIDConflictCount);
+		logger::info("  Other issues (missing EditorIDs, memory allocation failures, extra parts processing failures): {}", otherWarningCount);
+		if (formIDConflictCount == 0 && otherWarningCount == 0) {
+			logger::info("  No warnings encountered during processing.");
+		} else if (formIDConflictCount > 0) {
+			logger::info("  FormID conflict details:");
+			for (const auto& [editorID, conflictFormID, finalFormID] : formIDConflicts) {
+				if (finalFormID != 0) {
+					logger::info("    - {} [{:08X}] conflicted with [{:08X}], assigned [{:08X}]",
+						editorID, conflictFormID, conflictFormID, finalFormID);
+				} else {
+					logger::info("    - {} [{:08X}] conflicted with [{:08X}], no FormID assigned",
+						editorID, conflictFormID, conflictFormID);
+				}
+			}
 		}
 	}
 }
