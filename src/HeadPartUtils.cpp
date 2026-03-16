@@ -243,7 +243,7 @@ namespace HeadPartUtils
 			}
 
 			// Set the file for the new extra part
-			newExtraPart->SetFile(const_cast<RE::TESFile*>(a_targetFile));
+			SetFormFile(newExtraPart, const_cast<RE::TESFile*>(a_targetFile));
 			dataHandler.AddFormToDataHandler(newExtraPart);
 			a_existingEditorIDs.insert(newEditorID);
 			newExtraParts.push_back(newExtraPart);

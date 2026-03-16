@@ -3,6 +3,9 @@ set(NAME "Unisexy" CACHE STRING "")
 set(VERSION 2.0.3 CACHE STRING "")
 set(AE_VERSION 1)
 
+
+# 컴파일러에게 우리가 가져온 부품 폴더의 위치를 정확히 짚어줍니다.
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/extern/clib-util/include")
 # ---- Options ----
 
 option(COPY_BUILD "Copy the build output to the Skyrim directory." FALSE)
@@ -16,19 +19,6 @@ macro(set_from_environment VARIABLE)
 	endif ()
 endmacro()
 
-macro(find_commonlib_path)
-	if (CommonLibName AND NOT ${CommonLibName} STREQUAL "")
-		# Check extern
-		find_path(CommonLibPath
-		include/REL/Relocation.h
-		PATHS extern/${CommonLibName})
-		if (${CommonLibPath} STREQUAL "CommonLibPath-NOTFOUND")
-			#Check path
-			set_from_environment(${CommonLibName}Path)
-			set(CommonLibPath ${${CommonLibName}Path})
-		endif()
-	endif()
-endmacro()
 
 set_from_environment(VCPKG_ROOT)
 if(BUILD_SKYRIMAE)
@@ -45,10 +35,9 @@ else()
 	set(SkyrimPath ${Skyrim64Path})
 	set(SkyrimVersion "Skyrim SSE")
 endif()
-find_commonlib_path()
 message(
 	STATUS
-	"Building ${NAME} ${VERSION} for ${SkyrimVersion} at ${SkyrimPath} with ${CommonLibName} at ${CommonLibPath}."
+	"Building ${NAME} ${VERSION} for ${SkyrimVersion} at ${SkyrimPath}."
 )
 
 if (DEFINED VCPKG_ROOT)
@@ -114,16 +103,16 @@ set(Boost_USE_STATIC_LIBS ON)
 
 # ---- Dependencies ----
 
-if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY ${CommonLibPath})
-	add_subdirectory(${CommonLibPath} ${CommonLibName})
-else ()
-	message(
-		FATAL_ERROR
-		"Variable ${CommonLibName}Path is not set or in extern/."
-	)
-endif()
+include(FetchContent)
+FetchContent_Declare(
+	CommonLibSSE
+	GIT_REPOSITORY https://github.com/CharmedBaryon/CommonLibSSE-NG.git
+	GIT_TAG main
+)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(CLIB_UTIL_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/extern/clib-util/include" CACHE PATH "" FORCE)
+FetchContent_MakeAvailable(CommonLibSSE)
 
-find_path(CLIB_UTIL_INCLUDE_DIRS "ClibUtil/detail/SimpleIni.h")
 
 # ---- Add source files ----
 
@@ -175,7 +164,6 @@ target_include_directories(
 	PRIVATE
 		${CMAKE_CURRENT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/src
-		${CommonLibPath}/x64/Release
 		${CLIB_UTIL_INCLUDE_DIRS}
 )
 

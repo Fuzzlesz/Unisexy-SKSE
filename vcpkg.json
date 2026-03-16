@@ -6,10 +6,10 @@
   "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
-    "clib-util",
     "rsm-binary-io",
     "spdlog",
-    "xbyak"
+    "xbyak",
+    "rapidcsv"
   ],
   "builtin-baseline": "f4ea42fa5c2b993cf2b75725331616999e2e34d1",
   "overrides": [

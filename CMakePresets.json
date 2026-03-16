@@ -5,6 +5,7 @@
     "minor": 21,
     "patch": 0
   },
+  
   "configurePresets": [
     {
       "name": "cmake-dev",

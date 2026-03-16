@@ -1,0 +1,68 @@
+-- Building Unisexy 2.0.3 for Skyrim SSE at .
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36014/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static...
+Compiler found: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36014/bin/Hostx64/x64/cl.exe
+The following packages are already installed:
+  * boost-assert:x64-windows-static@1.88.0
+  * boost-cmake:x64-windows-static@1.88.0
+  * boost-config:x64-windows-static@1.88.0
+  * boost-headers:x64-windows-static@1.88.0
+  * boost-static-assert:x64-windows-static@1.88.0
+    boost-stl-interfaces:x64-windows-static@1.88.0
+  * boost-type-traits:x64-windows-static@1.88.0
+  * boost-uninstall:x64-windows-static@1.88.0
+  * fmt:x64-windows-static@11.0.2#1
+    rsm-binary-io:x64-windows-static@2.0.6
+    spdlog:x64-windows-static@1.15.3
+  * vcpkg-boost:x64-windows@2025-03-29
+  * vcpkg-cmake:x64-windows@2024-04-23
+  * vcpkg-cmake-config:x64-windows@2024-05-23
+    xbyak:x64-windows-static@7.23.1
+boost-stl-interfaces provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(boost_stl_interfaces CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE Boost::stl_interfaces)
+
+rsm-binary-io provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(binary_io CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE binary_io::binary_io)
+
+The package spdlog provides CMake targets:
+
+    find_package(spdlog CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE spdlog::spdlog)
+
+    # Or use the header-only version
+    find_package(spdlog CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE spdlog::spdlog_header_only)
+
+xbyak provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(xbyak CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE xbyak::xbyak)
+
+All requested installations completed successfully in: 1.9 ms
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26200.
+Options:
+	Enable Xbyak: OFF
+	Enable Skyrim SE: ON
+	Enable Skyrim AE: ON
+	Enable Skyrim VR: ON
+	Build Tests: OFF
+-- Configuring done (13.2s)
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+Please set them or make sure they are set and tested correctly in the CMake files:
+C:/Users/qtuna/Desktop/Unisexy-SKSE/CLIB_UTIL_INCLUDE_DIRS
+   used as include directory in directory C:/Users/qtuna/Desktop/Unisexy-SKSE
+C:/Users/qtuna/Desktop/Unisexy-SKSE/build/_deps/commonlibsse-src/RAPIDCSV_INCLUDE_DIRS
+   used as include directory in directory C:/Users/qtuna/Desktop/Unisexy-SKSE/build/_deps/commonlibsse-src
+
+-- Generating done (0.6s)
+CMake Generate step failed.  Build files cannot be regenerated correctly.

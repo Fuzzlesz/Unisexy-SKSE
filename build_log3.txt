@@ -1,0 +1,858 @@
+msbuild 버전 18.4.0+6e61e96ac(.NET Framework용)
+
+  cmake_pch.cxx
+  AIFormulas.cpp
+  AIProcess.cpp
+  ActiveEffect.cpp
+  ActiveEffectFactory.cpp
+  Actor.cpp
+  ActorEquipManager.cpp
+  ActorKill.cpp
+  ActorValueList.cpp
+  ActorValueOwner.cpp
+  AddCallbackVisitor.cpp
+  ArmorRatingVisitor.cpp
+  ArmorRatingVisitorBase.cpp
+  Array.cpp
+  BGSAttackData.cpp
+  BGSBaseAlias.cpp
+  BGSBipedObjectForm.cpp
+  BGSColorForm.cpp
+  BGSCreatedObjectManager.cpp
+  BGSDebris.cpp
+  BGSDecalNode.cpp
+  BGSDefaultObjectManager.cpp
+  BGSEntryPointFunctionDataActivateChoice.cpp
+  BGSEntryPointPerkEntry.cpp
+  BGSFootstepManager.cpp
+  BGSHeadPart.cpp
+  BGSIdleCollection.cpp
+  BGSKeywordForm.cpp
+  BGSListForm.cpp
+  BGSLocation.cpp
+  BGSOpenCloseForm.cpp
+  BGSPerkEntry.cpp
+  BGSPerkRankArray.cpp
+  BGSRefAlias.cpp
+  BGSSaveLoadManager.cpp
+  BGSSkillPerkTreeNode.cpp
+  BGSSoundCategory.cpp
+  BGSStoryTeller.cpp
+  BSAtomic.cpp
+  BSAudioManager.cpp
+  BSDirectInputManager.cpp
+  BSEffectShaderData.cpp
+  BSExtraData.cpp
+  BSFaceGenNiNode.cpp
+  BSFadeNode.cpp
+  BSFixedString.cpp
+  BSGamepadDevice.cpp
+  BSGeometry.cpp
+  BSHandleRefObject.cpp
+  BSInputDevice.cpp
+  BSInputDeviceFactory.cpp
+  BSInputDeviceManager.cpp
+  BSInputEventQueue.cpp
+  BSInstanceTriShape.cpp
+  BSKeyboardDevice.cpp
+  BSLightingShaderMaterialBase.cpp
+  BSLightingShaderProperty.cpp
+  BSModelDB.cpp
+  BSMouseDevice.cpp
+  BSMultiBoundNode.cpp
+  BSPCGamepadDeviceDelegate.cpp
+  BSPCGamepadDeviceHandler.cpp
+  BSPCOrbisGamepadDevice.cpp
+  BSPointerHandle.cpp
+  BSResourceNiBinaryStream.cpp
+  BSResponse.cpp
+  BSScaleformManager.cpp
+  BSScaleformTranslator.cpp
+  BSScriptObjectBindPolicy.cpp
+  BSShaderProperty.cpp
+  BSShaderTextureSet.cpp
+  BSSoundHandle.cpp
+  BSStringPool.cpp
+  BSSystemFileStorage.cpp
+  BSTArray.cpp
+  BSTCreateFactoryManager.cpp
+  BSVirtualKeyboardDevice.cpp
+  BSVisit.cpp
+  BSWin32GamepadDevice.cpp
+  BSWin32KeyboardDevice.cpp
+  BSWin32MouseDevice.cpp
+  BSWin32SaveDataSystemUtility.cpp
+  BSWin32VirtualKeyboardDevice.cpp
+  BSWindModifier.cpp
+  BSXFlags.cpp
+  BarterMenu.cpp
+  BipedAnim.cpp
+  BookMenu.cpp
+  BooksRead.cpp
+  bhkCharProxyController.cpp
+  bhkRigidBody.cpp
+  Calendar.cpp
+  ChestsLooted.cpp
+  Color.cpp
+  ColorUtil.cpp
+  CommandTable.cpp
+  ConeProjectile.cpp
+  Console.cpp
+  ConsoleLog.cpp
+  ContainerItemExtra.cpp
+  ContainerMenu.cpp
+  ControlMap.cpp
+  CriticalHit.cpp
+  DisarmedEvent.cpp
+  DragonSoulsGained.cpp
+  Effect.cpp
+  EffectArchetypes.cpp
+  EnchantConstructMenu.cpp
+  Explosion.cpp
+  ExtraAliasInstanceArray.cpp
+  ExtraAshPileRef.cpp
+  ExtraCanTalkToPlayer.cpp
+  ExtraCannotWear.cpp
+  ExtraCharge.cpp
+  ExtraContainerChanges.cpp
+  ExtraCount.cpp
+  ExtraDataList.cpp
+  ExtraEnchantment.cpp
+  ExtraEncounterZone.cpp
+  ExtraForcedTarget.cpp
+  ExtraHealth.cpp
+  ExtraHotkey.cpp
+  ExtraLevCreaModifier.cpp
+  ExtraLightData.cpp
+  ExtraLock.cpp
+  ExtraMissingLinkedRefIDs.cpp
+  ExtraNorthRotation.cpp
+  ExtraOwnership.cpp
+  ExtraPoison.cpp
+  ExtraRank.cpp
+  ExtraReferenceHandle.cpp
+  ExtraSoul.cpp
+  ExtraTextDisplayData.cpp
+  ExtraUniqueID.cpp
+  FindMaxMagnitudeVisitor.cpp
+  FormTypes.cpp
+  FxDelegate.cpp
+  FxDelegateArgs.cpp
+  GAtomic.cpp
+  GFxLoader.cpp
+  GFxLog.cpp
+  GFxMovie.cpp
+  GFxMovieDataDef.cpp
+  GFxMovieDef.cpp
+  GFxMovieView.cpp
+  GFxRenderConfig.cpp
+  GFxResource.cpp
+  GFxResourceID.cpp
+  GFxResourceKey.cpp
+  GFxState.cpp
+  GFxStateBag.cpp
+  GFxTranslator.cpp
+  GFxValue.cpp
+  GFxWStringBuffer.cpp
+  GFxWWHelper.cpp
+  GMemory.cpp
+  GMemoryHeap.cpp
+  GRefCountImpl.cpp
+  GRefCountNTSImpl.cpp
+  GRenderer.cpp
+  GStd.cpp
+  GString.cpp
+  GViewport.cpp
+  GameSettingCollection.cpp
+  GiftMenu.cpp
+  HUDMeter.cpp
+  HUDObject.cpp
+  Hazard.cpp
+  HeapBlock.cpp
+  hkBaseTypes.cpp
+  hkReferencedObject.cpp
+  hkStringPtr.cpp
+  hkVector4.cpp
+  hkpBroadPhase.cpp
+  hkpCdBody.cpp
+  hkpCharacterProxyListener.cpp
+  hkpMaterial.cpp
+  hkpWorldObject.cpp
+  IAnimationGraphManagerHolder.cpp
+  IFormFactory.cpp
+  IFunction.cpp
+  IHandlerFunctor.cpp
+  IMemoryStore.cpp
+  IMenu.cpp
+  INIPrefSettingCollection.cpp
+  INISettingCollection.cpp
+  IObjectHandlePolicy.cpp
+  IStackCallbackFunctor.cpp
+  IVirtualMachine.cpp
+  IngredientItem.cpp
+  InputEvent.cpp
+  InterfaceStrings.cpp
+  Inventory.cpp
+  Inventory3DManager.cpp
+  InventoryChanges.cpp
+  InventoryEntryData.cpp
+  ItemCrafted.cpp
+  ItemHarvested.cpp
+  ItemList.cpp
+  ItemsPickpocketed.cpp
+  LevelIncrease.cpp
+  LocalMapCamera.cpp
+  Location.cpp
+  LocationCleared.cpp
+  LocationDiscovery.cpp
+  LockpickingMenu.cpp
+  LooseFileStream.cpp
+  MagicCaster.cpp
+  MagicFavorites.cpp
+  MagicFormulas.cpp
+  MagicItem.cpp
+  MagicItemDataCollector.cpp
+  MagicSystem.cpp
+  MagicTarget.cpp
+  MagicUtilities.cpp
+  Main.cpp
+  MaterialIDs.cpp
+  MemoryPage.cpp
+  MenuControls.cpp
+  MenuCursor.cpp
+  MenuEventHandler.cpp
+  Misc.cpp
+  MissileProjectile.cpp
+  NativeFunctionBase.cpp
+  NiAVObject.cpp
+  NiAlphaProperty.cpp
+  NiAnimationKey.cpp
+  NiBinaryStream.cpp
+  NiBooleanExtraData.cpp
+  NiCamera.cpp
+  NiColor.cpp
+  NiColorData.cpp
+  NiColorKey.cpp
+  NiControllerManager.cpp
+  NiControllerSequence.cpp
+  NiExtraData.cpp
+  NiFloatData.cpp
+  NiFloatExtraData.cpp
+  NiFloatKey.cpp
+  NiFloatsExtraData.cpp
+  NiGeometry.cpp
+  NiIntegerExtraData.cpp
+  NiIntegersExtraData.cpp
+  NiInterpolator.cpp
+  NiMath.cpp
+  NiMatrix3.cpp
+  NiMemManager.cpp
+  NiNode.cpp
+  NiObject.cpp
+  NiObjectNET.cpp
+  NiPoint2.cpp
+  NiPoint3.cpp
+  NiRefObject.cpp
+  NiSkinInstance.cpp
+  NiStringsExtraData.cpp
+  NiSystem.cpp
+  NiTCollection.cpp
+  NiTexture.cpp
+  NiTimeController.cpp
+  NiTransform.cpp
+  Object.cpp
+  ObjectTypeInfo.cpp
+  ObjectiveState.cpp
+  PackUnpack.cpp
+  PackedInstructionStream.cpp
+  PlayerCamera.cpp
+  PlayerCharacter.cpp
+  PlayerControls.cpp
+  PlayerInputHandler.cpp
+  ProcessLists.cpp
+  Projectile.cpp
+  QuestStatus.cpp
+  RaceSexMenu.cpp
+  ReferenceEffectController.cpp
+  RemoveCallbackVisitor.cpp
+  Renderer.cpp
+  Rumble.cpp
+  ScrapHeap.cpp
+  Script.cpp
+  ScriptEventSourceHolder.cpp
+  SendUIMessage.cpp
+  Setting.cpp
+  ShoutAttack.cpp
+  SkillIncrease.cpp
+  Sky.cpp
+  SkyrimVM.cpp
+  SoulsTrapped.cpp
+  SourceActionMap.cpp
+  SpellsLearned.cpp
+  Stack.cpp
+  StackFrame.cpp
+  Stream.cpp
+  StreamBase.cpp
+  Skyrim.cpp
+  TES.cpp
+  TESAIForm.cpp
+  TESActorBase.cpp
+  TESAmmo.cpp
+  TESCamera.cpp
+  TESClimate.cpp
+  TESCondition.cpp
+  TESContainer.cpp
+  TESDataHandler.cpp
+  TESDescription.cpp
+  TESFaction.cpp
+  TESFile.cpp
+  TESForm.cpp
+  TESHavokUtilities.cpp
+  TESHitEvent.cpp
+  TESLeveledList.cpp
+  TESNPC.cpp
+  TESObjectARMA.cpp
+  TESObjectARMO.cpp
+  TESObjectBOOK.cpp
+  TESObjectCELL.cpp
+  TESObjectREFR.cpp
+  TESObjectSTAT.cpp
+  TESObjectWEAP.cpp
+  TESQuest.cpp
+  TESRace.cpp
+  TESSpellList.cpp
+  TESTopic.cpp
+  TESTopicInfo.cpp
+  TESWorldSpace.cpp
+  TaskQueueInterface.cpp
+  ThumbstickEvent.cpp
+  TypeInfo.cpp
+  UI.cpp
+  UI3DSceneManager.cpp
+  UIBlurManager.cpp
+  UIMessageQueue.cpp
+  UnlinkedTypes.cpp
+  UserEvents.cpp
+  Variable.cpp
+  VirtualMachine.cpp
+  ZeroFunctionArguments.cpp
+  ID.cpp
+  Module.cpp
+  Relocation.cpp
+  ADVAPI32.cpp
+  D3D11.cpp
+  D3DCOMPILER.cpp
+  DBGHELP.cpp
+  DXGI.cpp
+  KERNEL32.cpp
+  OLE32.cpp
+  SHELL32.cpp
+  USER32.cpp
+  API.cpp
+  IAT.cpp
+  PCH.cpp
+  InputMap.cpp
+  Interfaces.cpp
+  Logger.cpp
+  RegistrationSet.cpp
+  RegistrationSetUnique.cpp
+  Trampoline.cpp
+  Translation.cpp
+  Version.cpp
+  VERSION.cpp
+  CommonLibSSE.vcxproj -> C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-build\Release\CommonLibSSE.lib
+  Building Custom Rule C:/Users/qtuna/Desktop/Unisexy-SKSE/CMakeLists.txt
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  FormIDManager.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  HeadPartUtils.cpp
+  PCH.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  Settings.cpp
+  Unisexy.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  main.cpp
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Unisexy.h(3,1): error C1083: 포함 파일을 열 수 없습니다. 'ClibUtil/singleton.hpp': No such file or directory [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Unisexy.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(13,20): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(13,20): error C2061: 구문 오류: 식별자 'int32_t' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(28,23): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(28,23): error C2061: 구문 오류: 식별자 'int32_t' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,88): error C2039: 'intptr_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,88): error C2061: 구문 오류: 식별자 'intptr_t' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,88): error C2146: 구문 오류: '('이(가) 'intptr_t' 식별자 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,100): error C3329: 구문 오류: '}'이(가) 있어야 하는데 ')'이(가) 있습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,44): error C2119: 'INVALID_HANDLE_VALUE': 'const auto'에 대한 형식은 비어 있는 이니셜라이저에서 추론할 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(33,103): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(35,1): error C2059: 구문 오류: '}' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(35,1): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(38,1): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(38,1): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까? [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,29): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,18): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,38): error C2146: 구문 오류: ')'이(가) 'a_data1' 식별자 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,38): error C3646: 'a_data1': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,52): error C2039: 'uint16_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,61): error C2143: 구문 오류: ';'이(가) 'const' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,61): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,87): error C2039: 'uint16_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,96): error C3646: 'a_data3': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,76): warning C4228: 비표준 확장이 사용됨: 선언자 목록에서 쉼표 뒤의 한정자가 무시됩니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,116): error C2039: 'array': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,121): error C2143: 구문 오류: ';'이(가) '<' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,105): warning C4228: 비표준 확장이 사용됨: 선언자 목록에서 쉼표 뒤의 한정자가 무시됩니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,127): error C2039: 'uint8_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,147): error C2059: 구문 오류: ')' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(65,158): error C2334: ':' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(84,16): error C2027: 정의되지 않은 형식 'REX::W32::GUID'을(를) 사용했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(61,9):
+      'REX::W32::GUID' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(84,29): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(90,1): error C2059: 구문 오류: 'namespace' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(91,1): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(91,1): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까? [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,29): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,18): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,37): error C2146: 구문 오류: ')'이(가) 'a_x1' 식별자 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,37): error C3646: 'a_x1': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,54): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,62): error C3646: 'a_y1': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,66): error C2059: 구문 오류: ',' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,118): error C2059: 구문 오류: 'noexcept' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(112,127): error C2334: ':' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(121,16): error C2027: 정의되지 않은 형식 'REX::W32::REX::W32::RECT'을(를) 사용했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(108,9):
+      'REX::W32::REX::W32::RECT' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(121,29): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(124,1): error C2059: 구문 오류: 'namespace' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(125,1): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(125,1): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까? [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(139,8): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(139,18): error C3646: 'lockCount': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(139,8): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(140,8): error C2039: 'int32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(140,18): error C3646: 'recursionCount': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(140,8): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(143,8): error C2039: 'uintptr_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(143,18): error C3646: 'spinCount': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(143,8): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(145,41): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(149,8): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(149,17): error C3646: 'length': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(149,8): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(151,17): error C3646: 'inheritHandle': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(151,3): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(153,44): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(159,9): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(159,18): error C3646: 'lo': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(159,9): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(160,9): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(160,18): error C3646: 'hi': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(160,9): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(162,8): error C2039: 'uint64_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(162,17): error C3646: 'value': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\REX\W32\BASE.h(162,8): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(13,42): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(27,17): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(27,3): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(27,26): error C3646: 'lock': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(60,18): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(60,18): error C2061: 구문 오류: 식별자 'uint32_t' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(65,17): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(65,3): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(65,26): error C3646: '_owningThread': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(66,17): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(66,3): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(66,26): error C3646: '_lockCount': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(66,17): error C2086: 'volatile int REX::W32::REX::W32::RE::BSSpinLock::uint32_t': 재정의 [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(68,35): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(88,34): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(88,20): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(88,43): error C3646: '_writerThread': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(89,34): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(89,20): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(89,43): error C3646: '_lock': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(89,34): error C2086: 'volatile int REX::W32::REX::W32::RE::BSReadWriteLock::uint32_t': 재정의 [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSAtomic.h(91,40): error C2607: 정적 어설션이 실패했습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(52,33): error C2039: 'uint16_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(52,42): error C3646: 'crc': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(52,46): error C2059: 구문 오류: ')' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(52,63): error C2334: '{' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(69,33): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(69,42): error C3646: 'length': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(69,49): error C2059: 구문 오류: ')' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(69,66): error C2334: '{' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(70,33): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(70,42): error C3646: 'size': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(70,47): error C2059: 구문 오류: ')' [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(70,64): error C2334: '{' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(88,9): error C2039: 'uint16_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(88,27): error C3646: '_flags': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(88,9): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(89,18): error C2039: 'uint16_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(89,4): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(89,27): error C3646: '_crc': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(92,10): error C2039: 'uint32_t': 'std'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\predefined C++ types (compiler internal)(359,11):
+      'std' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(92,19): error C3646: '_length': 알 수 없는 재정의 지정자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BSStringPool.h(92,19): error C1003: 오류 수가 100개를 초과했습니다. 컴파일을 중지합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Settings.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\PCH.h(11,1): error C1083: 포함 파일을 열 수 없습니다. 'ClibUtil/singleton.hpp': No such file or directory [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/PCH.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\PCH.h(11,1): error C1083: 포함 파일을 열 수 없습니다. 'ClibUtil/singleton.hpp': No such file or directory [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/main.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,36): error C3083: 'singleton': '::'의 왼쪽에 있는 기호는 형식이어야 합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/FormIDManager.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,47): error C2039: 'ISingleton': 'clib_util'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/FormIDManager.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\extern\clib-util\include\ClibUtil\simpleIni.hpp(8,11):
+      'clib_util' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,47): error C2504: 'ISingleton': 기본 클래스를 정의하지 않았습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/FormIDManager.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,57): error C2143: 구문 오류: ','이(가) '<' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/FormIDManager.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(38,3): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(38,11): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(44,3): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(44,11): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(50,40): error C2039: 'GetSingleton': 'Settings'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,7):
+      'Settings' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(50,40): error C3861: 'GetSingleton': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(50,13): error C2737: 'verboseLogging': const 개체를 초기화해야 합니다 [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(56,3): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(56,11): error C3861: 'info': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(68,5): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(68,13): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(70,5): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(70,13): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(85,4): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(85,12): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(98,6): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(98,14): error C3861: 'info': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(101,7): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(101,15): error C3861: 'info': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(112,5): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(112,13): error C3861: 'warn': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(120,5): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(120,13): error C3861: 'warn': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(130,2): error C2653: 'logger': 클래스 또는 네임스페이스 이름이 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\FormIDManager.cpp(130,10): error C3861: 'error': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,36): error C3083: 'singleton': '::'의 왼쪽에 있는 기호는 형식이어야 합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,47): error C2039: 'ISingleton': 'clib_util'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\extern\clib-util\include\ClibUtil\simpleIni.hpp(8,11):
+      'clib_util' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,47): error C2504: 'ISingleton': 기본 클래스를 정의하지 않았습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Settings.h(6,57): error C2143: 구문 오류: ','이(가) '<' 앞에 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\PCH.h(11,1): error C1083: 포함 파일을 열 수 없습니다. 'ClibUtil/singleton.hpp': No such file or directory [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+  

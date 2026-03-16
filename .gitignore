@@ -1,2 +1,9 @@
 build*/
 /.vs
+*.zip
+*.lib
+*.dll
+*.exe
+vcpkg_installed/
+out/
+bin/

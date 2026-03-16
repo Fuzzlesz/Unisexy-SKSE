@@ -1,0 +1,36 @@
+msbuild 버전 18.4.0+6e61e96ac(.NET Framework용)
+
+  CommonLibSSE.vcxproj -> C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-build\Release\CommonLibSSE.lib
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  cmake_pch.cxx
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  FormIDManager.cpp
+  HeadPartUtils.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  PCH.cpp
+  Settings.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  Unisexy.cpp
+  main.cpp
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\main.cpp(43,18): error C2039: 'RUNTIME_1_5_39': 'SKSE'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/main.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\SKSE\Translation.h(3,11):
+      'SKSE' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\main.cpp(43,18): error C2065: 'RUNTIME_1_5_39': 선언되지 않은 식별자입니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/main.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Unisexy.cpp(171,16): error C2039: 'SetFile': 'RE::BGSHeadPart'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Unisexy.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BGSHeadPart.h(13,8):
+      'RE::BGSHeadPart' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\HeadPartUtils.cpp(246,18): error C2039: 'SetFile': 'RE::BGSHeadPart'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-src\include\RE\B\BGSHeadPart.h(13,8):
+      'RE::BGSHeadPart' 선언을 참조하십시오.
+  

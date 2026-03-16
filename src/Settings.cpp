@@ -22,6 +22,7 @@ void Settings::Load()
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = { false, false };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = { false, false };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { false, false };
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes] = { false, false };
 	_verboseLogging = false;
 	_showOnlyUnisexy = false;
 
@@ -45,6 +46,7 @@ void Settings::Load()
 		             ini.KeyExists("HeadPartTypes", "Scars") ||
 		             ini.KeyExists("HeadPartTypes", "Brows") ||
 		             ini.KeyExists("HeadPartTypes", "FacialHair") ||
+		             ini.KeyExists("HeadPartTypes", "Eyes") ||
 		             ini.KeyExists("Debug", "DisableVanillaParts");
 
 		// Check if new format keys are missing
@@ -52,10 +54,12 @@ void Settings::Load()
 		                            !ini.KeyExists("HeadPartTypes", "ScarsMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "BrowsMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "FacialHairMale") ||
+		                            !ini.KeyExists("HeadPartTypes", "EyesMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "HairFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "ScarsFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "BrowsFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "FacialHairFemale") ||
+		                            !ini.KeyExists("HeadPartTypes", "EyesFemale") ||
 		                            !ini.KeyExists("Debug", "VerboseLogging") ||
 		                            !ini.KeyExists("Debug", "ShowOnlyUnisexy");
 
@@ -101,6 +105,14 @@ void Settings::Load()
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { value, value };
 				if constexpr (INI_DEBUG_LOGGING) {
 					logger::info("  Migrated FacialHair={} to FacialHairMale={}, FacialHairFemale={}", value, value, value);
+				}
+			}
+
+			if (ini.KeyExists(section, "Eyes")) {
+				const bool value = ini.GetBoolValue(section, "Eyes", false, &foundValue);
+				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes] = { value, value };
+				if constexpr (INI_DEBUG_LOGGING) {
+					logger::info("  Migrated Eyes={} to EyesMale={}, EyesFemale={}", value, value, value);
 				}
 			}
 
@@ -194,6 +206,26 @@ void Settings::Load()
 			}
 		}
 
+		if (ini.KeyExists(section, "EyesMale")) {
+			_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled =
+				ini.GetBoolValue(section, "EyesMale", false, &foundValue);
+			if constexpr (INI_DEBUG_LOGGING) {
+				if (foundValue) {
+					logger::info("  Loaded EyesMale={}", _enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled);
+				}
+			}
+		}
+
+		if (ini.KeyExists(section, "EyesFemale")) {
+			_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled =
+				ini.GetBoolValue(section, "EyesFemale", false, &foundValue);
+			if constexpr (INI_DEBUG_LOGGING) {
+				if (foundValue) {
+					logger::info("  Loaded EyesFemale={}", _enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled);
+				}
+			}
+		}
+
 		if (ini.KeyExists("Debug", "VerboseLogging")) {
 			_verboseLogging = ini.GetBoolValue("Debug", "VerboseLogging", false, &foundValue);
 			if constexpr (INI_DEBUG_LOGGING) {
@@ -226,6 +258,9 @@ void Settings::Load()
 			logger::info("  FacialHair: Male={}, Female={}",
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].maleEnabled,
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled);
+			logger::info("  Eyes: Male={}, Female={}",
+				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled,
+				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled);
 			logger::info("  Debug: VerboseLogging={}, ShowOnlyUnisexy={}",
 				_verboseLogging, _showOnlyUnisexy);
 		}
@@ -262,6 +297,8 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "FacialHairMale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].maleEnabled ? "true" : "false");
+	ini.SetValue("HeadPartTypes", "EyesMale",
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled ? "true" : "false");
 
 	ini.SetValue("HeadPartTypes", "HairFemale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair].femaleEnabled ? "true" : "false",
@@ -272,6 +309,8 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].femaleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "FacialHairFemale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair].femaleEnabled ? "true" : "false");
+	ini.SetValue("HeadPartTypes", "EyesFemale",
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled ? "true" : "false");
 
 	// Debug section
 	ini.SetValue("Debug", "VerboseLogging", _verboseLogging ? "true" : "false",
@@ -284,6 +323,7 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 	ini.Delete("HeadPartTypes", "Scars");
 	ini.Delete("HeadPartTypes", "Brows");
 	ini.Delete("HeadPartTypes", "FacialHair");
+	ini.Delete("HeadPartTypes", "Eyes");
 	ini.Delete("Debug", "DisableVanillaParts");
 
 	logger::info("Saving updated settings to {}", iniPath);
@@ -327,6 +367,8 @@ std::string Settings::GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type)
 		return "Scars";
 	case RE::BGSHeadPart::HeadPartType::kEyebrows:
 		return "Brows";
+	case RE::BGSHeadPart::HeadPartType::kEyes:
+		return "Eyes";
 	case RE::BGSHeadPart::HeadPartType::kMisc:
 		return "Misc";
 	default:

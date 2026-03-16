@@ -38,6 +38,7 @@ void Unisexy::DoSexyStuff()
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
 		RE::BGSHeadPart::HeadPartType::kScar,
 		RE::BGSHeadPart::HeadPartType::kEyebrows,
+		RE::BGSHeadPart::HeadPartType::kEyes,
 	};
 
 	// Build set of existing EditorIDs to prevent duplicates
@@ -168,7 +169,7 @@ void Unisexy::DoSexyStuff()
 		}
 
 		// Set the file for the new head part
-		newHeadPart->SetFile(const_cast<RE::TESFile*>(targetFile));
+		HeadPartUtils::SetFormFile(newHeadPart, const_cast<RE::TESFile*>(targetFile));
 
 		// Process extra parts
 		if (reportableTypes.contains(headPartType)) {

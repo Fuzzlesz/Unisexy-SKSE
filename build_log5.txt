@@ -1,0 +1,21 @@
+msbuild 버전 18.4.0+6e61e96ac(.NET Framework용)
+
+  CommonLibSSE.vcxproj -> C:\Users\qtuna\Desktop\Unisexy-SKSE\build\_deps\commonlibsse-build\Release\CommonLibSSE.lib
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  HeadPartUtils.cpp
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+cl : 명령줄  warning D9025: '/Ob2'을(를) '/Ob3'(으)로 재정의합니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  Unisexy.cpp
+  main.cpp
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Unisexy.cpp(171,18): error C2039: 'SetFormFile': 'HeadPartUtils'의 멤버가 아닙니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Unisexy.cpp'을(를) 컴파일하는 중)
+      C:\Users\qtuna\Desktop\Unisexy-SKSE\src\HeadPartUtils.h(8,11):
+      'HeadPartUtils' 선언을 참조하십시오.
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\Unisexy.cpp(171,18): error C3861: 'SetFormFile': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/Unisexy.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\qtuna\Desktop\Unisexy-SKSE\src\HeadPartUtils.cpp(246,4): error C3861: 'SetFormFile': 식별자를 찾을 수 없습니다. [C:\Users\qtuna\Desktop\Unisexy-SKSE\build\Unisexy.vcxproj]
+  (소스 파일 '../src/HeadPartUtils.cpp'을(를) 컴파일하는 중)
+  
