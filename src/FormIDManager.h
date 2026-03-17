@@ -16,7 +16,3 @@ private:
 	// Track assigned FormIDs per plugin to prevent conflicts
 	std::map<const RE::TESFile*, std::set<std::uint32_t>> assignedFormIDs_;
 };
-
-// Utility function to determine which plugin file a FormID belongs to
-// Returns nullptr if the FormID doesn't correspond to a loaded plugin
-const RE::TESFile* GetFileFromFormID(std::uint32_t formID);

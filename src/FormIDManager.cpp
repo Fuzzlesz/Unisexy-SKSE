@@ -162,17 +162,3 @@ bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFil
 		editorID, targetFile->GetFilename());
 	return false;
 }
-
-const RE::TESFile* GetFileFromFormID(std::uint32_t formID)
-{
-	auto& dataHandler = *RE::TESDataHandler::GetSingleton();
-	if ((formID & ESL_FLAG) == ESL_FLAG) {
-		// Resolve ESL plugin from FormID
-		const std::uint16_t smallIndex = static_cast<std::uint16_t>((formID & ESL_INDEX_MASK) >> ESL_INDEX_SHIFT);
-		return dataHandler.LookupLoadedLightModByIndex(smallIndex);
-	} else {
-		// Resolve ESP/ESM plugin from FormID
-		const std::uint8_t index = static_cast<std::uint8_t>((formID & ESP_INDEX_MASK) >> ESP_INDEX_SHIFT);
-		return dataHandler.LookupLoadedModByIndex(index);
-	}
-}
