@@ -80,6 +80,7 @@ namespace HeadPartUtils
 		FormIDManager& a_formIDManager,
 		const RE::TESFile* a_targetFile,
 		std::set<std::string>& a_existingEditorIDs,
+		std::unordered_map<std::string, RE::BGSHeadPart*>& a_editorIDToForm,
 		const Settings& a_settings,
 		int& a_createdCount,
 		std::vector<std::tuple<std::string, std::uint32_t, std::uint32_t>>& a_conflictDetails)
@@ -174,27 +175,18 @@ namespace HeadPartUtils
 			auto existingIt = a_existingEditorIDs.find(newEditorID);
 			if (existingIt != a_existingEditorIDs.end()) {
 				// Search for existing version to reuse
-				bool foundExisting = false;
-				for (const auto& existingHeadPart : dataHandler.GetFormArray<RE::BGSHeadPart>()) {
-					if (existingHeadPart && existingHeadPart->GetFormEditorID()) {
-						const char* existingID = existingHeadPart->GetFormEditorID();
-						if (existingID && newEditorID == existingID) {
-							newExtraParts.push_back(existingHeadPart);
-							foundExisting = true;
-							if (verboseLogging) {
-								logger::info("Reusing existing extra part: {} [{:08X}] (Type: {}) for head part {} [{:08X}]",
-									newEditorID,
-									existingHeadPart->formID,
-									Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(existingHeadPart->type.get())),
-									a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
-									a_newHeadPart->formID);
-							}
-							break;
-						}
+				auto mapIt = a_editorIDToForm.find(newEditorID);
+				if (mapIt != a_editorIDToForm.end()) {
+					newExtraParts.push_back(mapIt->second);
+					if (verboseLogging) {
+						logger::info("Reusing existing extra part: {} [{:08X}] (Type: {}) for head part {} [{:08X}]",
+							newEditorID,
+							mapIt->second->formID,
+							Settings::GetHeadPartTypeName(static_cast<RE::BGSHeadPart::HeadPartType>(mapIt->second->type.get())),
+							a_newHeadPart->GetFormEditorID() ? a_newHeadPart->GetFormEditorID() : "NoEditorID",
+							a_newHeadPart->formID);
 					}
-				}
-
-				if (!foundExisting) {
+				} else {
 					// Fall back to original if we can't find the existing version
 					newExtraParts.push_back(const_cast<RE::BGSHeadPart*>(extraPart));
 					if (verboseLogging) {
@@ -246,6 +238,7 @@ namespace HeadPartUtils
 			newExtraPart->SetFile(const_cast<RE::TESFile*>(a_targetFile));
 			dataHandler.AddFormToDataHandler(newExtraPart);
 			a_existingEditorIDs.insert(newEditorID);
+			a_editorIDToForm[newEditorID] = newExtraPart;
 			newExtraParts.push_back(newExtraPart);
 			a_createdCount++;
 

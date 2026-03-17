@@ -29,6 +29,7 @@ namespace HeadPartUtils
 		FormIDManager& a_formIDManager,
 		const RE::TESFile* a_targetFile,
 		std::set<std::string>& a_existingEditorIDs,
+		std::unordered_map<std::string, RE::BGSHeadPart*>& a_editorIDToForm,
 		const Settings& a_settings,
 		int& a_createdCount,
 		std::vector<std::tuple<std::string, std::uint32_t, std::uint32_t>>& a_conflictDetails);

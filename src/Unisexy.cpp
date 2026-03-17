@@ -43,9 +43,11 @@ void Unisexy::DoSexyStuff()
 
 	// Build set of existing EditorIDs to prevent duplicates
 	std::set<std::string> existingEditorIDs;
+	std::unordered_map<std::string, RE::BGSHeadPart*> editorIDToForm;
 	for (const auto& existingHeadPart : dataHandler.GetFormArray<RE::BGSHeadPart>()) {
 		if (existingHeadPart && existingHeadPart->GetFormEditorID()) {
 			existingEditorIDs.insert(existingHeadPart->GetFormEditorID());
+			editorIDToForm[existingHeadPart->GetFormEditorID()] = existingHeadPart;
 		}
 	}
 
@@ -175,7 +177,7 @@ void Unisexy::DoSexyStuff()
 		if (reportableTypes.contains(headPartType)) {
 			if (!HeadPartUtils::ProcessExtraParts(
 					newHeadPart, headPart, formIDManager, targetFile,
-					existingEditorIDs, settings, createdCount, formIDConflicts)) {
+					existingEditorIDs, editorIDToForm, settings, createdCount, formIDConflicts)) {
 				logger::error("Failed to process extra parts for {}", newEditorID);
 				otherWarningCount++;  // Increment for extra parts processing failure
 				delete newHeadPart;
@@ -186,6 +188,7 @@ void Unisexy::DoSexyStuff()
 		// Register the new head part with the data handler
 		dataHandler.AddFormToDataHandler(newHeadPart);
 		existingEditorIDs.insert(newEditorID);
+		editorIDToForm[newEditorID] = newHeadPart;
 		createdCount++;
 
 		if (verboseLogging) {
