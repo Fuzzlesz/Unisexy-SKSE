@@ -5,8 +5,10 @@ namespace HeadPartUtils
 {
 	std::string GenerateUnisexyEditorID(const RE::BGSHeadPart* a_headPart)
 	{
-		// Source head part should never be null from loaded game data
-		assert(a_headPart);
+		if (!a_headPart) {
+			logger::error("GenerateUnisexyEditorID called with null head part");
+			return "";
+		}
 
 		const char* editorID = a_headPart->GetFormEditorID();
 		// Some forms legitimately have no EditorID - this check is still needed
@@ -32,8 +34,14 @@ namespace HeadPartUtils
 		bool a_toFemale,
 		[[maybe_unused]] const Settings& a_settings)
 	{
-		// Factory and source should never be null from validated game data
-		assert(a_factory && a_sourcePart);
+		if (!a_factory) {
+			logger::error("CreateUnisexyHeadPart called with null factory");
+			return nullptr;
+		}
+		if (!a_sourcePart) {
+			logger::error("CreateUnisexyHeadPart called with null source part");
+			return nullptr;
+		}
 
 		// Create new head part - memory allocation can still fail
 		auto* newHeadPart = static_cast<RE::BGSHeadPart*>(a_factory->Create());
@@ -85,8 +93,18 @@ namespace HeadPartUtils
 		int& a_createdCount,
 		std::vector<std::tuple<std::string, std::uint32_t, std::uint32_t>>& a_conflictDetails)
 	{
-		// All parameters should be valid from caller
-		assert(a_newHeadPart && a_sourcePart && a_targetFile);
+		if (!a_newHeadPart) {
+			logger::error("ProcessExtraParts called with null new head part");
+			return false;
+		}
+		if (!a_sourcePart) {
+			logger::error("ProcessExtraParts called with null source part");
+			return false;
+		}
+		if (!a_targetFile) {
+			logger::error("ProcessExtraParts called with null target file");
+			return false;
+		}
 
 		// Early exit if no extra parts to process
 		const auto& extraParts = a_sourcePart->extraParts;
@@ -99,9 +117,11 @@ namespace HeadPartUtils
 			return true;
 		}
 
-		// Get factory for creating extra parts
 		const auto headFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::BGSHeadPart>();
-		assert(headFactory);
+		if (!headFactory) {
+			logger::error("ProcessExtraParts could not get BGSHeadPart factory");
+			return false;
+		}
 
 		// Determine target gender from new head part's flags (cache the result)
 		const bool targetIsFemale = a_newHeadPart->flags.all(RE::BGSHeadPart::Flag::kFemale);
