@@ -37,6 +37,7 @@ void Unisexy::DoSexyStuff()
 		RE::BGSHeadPart::HeadPartType::kHair,
 		RE::BGSHeadPart::HeadPartType::kFacialHair,
 		RE::BGSHeadPart::HeadPartType::kScar,
+		RE::BGSHeadPart::HeadPartType::kEyes,
 		RE::BGSHeadPart::HeadPartType::kEyebrows,
 	};
 

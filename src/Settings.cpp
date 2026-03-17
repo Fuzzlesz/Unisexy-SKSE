@@ -20,6 +20,7 @@ void Settings::Load()
 	// Set default values - hair enabled by default, others disabled
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kHair] = { true, true };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar] = { false, false };
+	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes] = { false, false };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows] = { false, false };
 	_enabledTypes[RE::BGSHeadPart::HeadPartType::kFacialHair] = { false, false };
 	_verboseLogging = false;
@@ -50,10 +51,12 @@ void Settings::Load()
 		// Check if new format keys are missing
 		const bool missingNewKeys = !ini.KeyExists("HeadPartTypes", "HairMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "ScarsMale") ||
+		                            !ini.KeyExists("HeadPartTypes", "EyesMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "BrowsMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "FacialHairMale") ||
 		                            !ini.KeyExists("HeadPartTypes", "HairFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "ScarsFemale") ||
+		                            !ini.KeyExists("HeadPartTypes", "EyesFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "BrowsFemale") ||
 		                            !ini.KeyExists("HeadPartTypes", "FacialHairFemale") ||
 		                            !ini.KeyExists("Debug", "VerboseLogging") ||
@@ -154,6 +157,26 @@ void Settings::Load()
 			}
 		}
 
+		if (ini.KeyExists(section, "EyesMale")) {
+			_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled =
+				ini.GetBoolValue(section, "EyesMale", false, &foundValue);
+			if constexpr (INI_DEBUG_LOGGING) {
+				if (foundValue) {
+					logger::info("  Loaded EyesMale={}", _enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled);
+				}
+			}
+		}
+
+		if (ini.KeyExists(section, "EyesFemale")) {
+			_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled =
+				ini.GetBoolValue(section, "EyesFemale", false, &foundValue);
+			if constexpr (INI_DEBUG_LOGGING) {
+				if (foundValue) {
+					logger::info("  Loaded EyesFemale={}", _enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled);
+				}
+			}
+		}
+
 		if (ini.KeyExists(section, "BrowsMale")) {
 			_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled =
 				ini.GetBoolValue(section, "BrowsMale", false, &foundValue);
@@ -220,6 +243,9 @@ void Settings::Load()
 			logger::info("  Scars: Male={}, Female={}",
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].maleEnabled,
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].femaleEnabled);
+			logger::info("  Eyes: Male={}, Female={}",
+				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled,
+				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled);
 			logger::info("  Brows: Male={}, Female={}",
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled,
 				_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].femaleEnabled);
@@ -258,6 +284,8 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 		"\n; Enable converting female parts to male versions");
 	ini.SetValue("HeadPartTypes", "ScarsMale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].maleEnabled ? "true" : "false");
+	ini.SetValue("HeadPartTypes", "EyesMale",
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].maleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "BrowsMale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].maleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "FacialHairMale",
@@ -268,6 +296,8 @@ void Settings::SaveConfigFile(CSimpleIniA& ini, const std::string& iniPath)
 		"\n; Enable converting male parts to female versions");
 	ini.SetValue("HeadPartTypes", "ScarsFemale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kScar].femaleEnabled ? "true" : "false");
+	ini.SetValue("HeadPartTypes", "EyesFemale",
+		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyes].femaleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "BrowsFemale",
 		_enabledTypes[RE::BGSHeadPart::HeadPartType::kEyebrows].femaleEnabled ? "true" : "false");
 	ini.SetValue("HeadPartTypes", "FacialHairFemale",
@@ -325,6 +355,8 @@ std::string Settings::GetHeadPartTypeName(RE::BGSHeadPart::HeadPartType type)
 		return "FacialHair";
 	case RE::BGSHeadPart::HeadPartType::kScar:
 		return "Scars";
+	case RE::BGSHeadPart::HeadPartType::kEyes:
+		return "Eyes";
 	case RE::BGSHeadPart::HeadPartType::kEyebrows:
 		return "Brows";
 	case RE::BGSHeadPart::HeadPartType::kMisc:
