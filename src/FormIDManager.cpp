@@ -127,8 +127,39 @@ bool FormIDManager::AssignFormID(RE::TESForm* form, const RE::TESFile* targetFil
 		attemptCount++;
 	}
 
-	logger::error("Failed to assign FormID for '{}' in plugin '{}' after {} attempts",
-		editorID, targetFile->GetFilename(), MAX_FORMID_ATTEMPTS);
+	// Hash retries exhausted — continue decrementing from where counter stopped
+	// Stays near the hash-derived region rather than jumping to an unrelated address
+	if (verboseLogging) {
+		logger::warn("Hash-derived attempts exhausted for '{}', continuing decrement from {:04X}", editorID, counter);
+	}
+	while (counter >= FORMID_MIN) {
+		if (isLight) {
+			newFormID = ESL_FLAG |
+			            ((static_cast<std::uint32_t>(targetFile->smallFileCompileIndex) << ESL_INDEX_SHIFT) | counter);
+		} else {
+			newFormID = ((static_cast<std::uint32_t>(targetFile->compileIndex) << ESP_INDEX_SHIFT) | counter);
+		}
+
+		if (newFormID != 0 && assignedIDs.find(newFormID) == assignedIDs.end()) {
+			auto* existingForm = RE::TESDataHandler::GetSingleton()->LookupForm(newFormID, targetFile->GetFilename());
+			if (!existingForm) {
+				form->SetFormID(newFormID, false);
+				assignedIDs.insert(newFormID);
+				if (verboseLogging) {
+					logger::info("Assigned FormID {:08X} to '{}' in plugin '{}' (extended decrement fallback)",
+						newFormID, editorID, targetFile->GetFilename());
+				}
+				return true;
+			}
+		}
+
+		if (counter == FORMID_MIN)
+			break;
+		counter--;
+	}
+
+	logger::error("Failed to assign FormID for '{}' in plugin '{}' — no available FormIDs remain",
+		editorID, targetFile->GetFilename());
 	return false;
 }
 
