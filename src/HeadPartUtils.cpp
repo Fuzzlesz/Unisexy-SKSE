@@ -31,8 +31,7 @@ namespace HeadPartUtils
 		RE::IFormFactory* a_factory,
 		const RE::BGSHeadPart* a_sourcePart,
 		const std::string& a_newEditorID,
-		bool a_toFemale,
-		[[maybe_unused]] const Settings& a_settings)
+		bool a_toFemale)
 	{
 		if (!a_factory) {
 			logger::error("CreateUnisexyHeadPart called with null factory");
@@ -221,7 +220,7 @@ namespace HeadPartUtils
 
 			// Create new gender-flipped extra part
 			auto* newExtraPart = CreateUnisexyHeadPart(
-				headFactory, extraPart, newEditorID, targetIsFemale, a_settings);
+				headFactory, extraPart, newEditorID, targetIsFemale);
 
 			if (!newExtraPart) {
 				// Fall back to original extra part if creation fails

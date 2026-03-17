@@ -17,8 +17,7 @@ namespace HeadPartUtils
 		RE::IFormFactory* a_factory,
 		const RE::BGSHeadPart* a_sourcePart,
 		const std::string& a_newEditorID,
-		bool a_toFemale,
-		const Settings& a_settings);
+		bool a_toFemale);
 
 	// Process and create gender-flipped versions of extra parts
 	// Updates a_createdCount with number of extra parts created

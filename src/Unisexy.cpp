@@ -138,7 +138,7 @@ void Unisexy::DoSexyStuff()
 
 		// Create the new gender-flipped head part
 		auto* newHeadPart = HeadPartUtils::CreateUnisexyHeadPart(
-			headFactory, headPart, newEditorID, toFemale, settings);
+			headFactory, headPart, newEditorID, toFemale);
 		if (!newHeadPart) {
 			otherWarningCount++;  // Increment for memory allocation failure
 			continue;
